@@ -4,23 +4,43 @@ using UnityEngine;
 
 public class Entity : MonoBehaviour
 {
+    [Header("Entity Components")]
     public Rigidbody _rigidbody;
+    public Animator _animator;
+    public AudioSource _audioSource;
 
-    public bool isFreezed;
+    [Header("Entity")]
+    [SerializeField]private bool _isFreezed;
+    public bool isFreezed
+    {
+        get { return _isFreezed; }
+        set
+        {
+            _isFreezed = value;
+            if (value)
+            {
+                FreezeTimeAction();
+            }
+            else
+            {
+                UnFreezeTimeAction();
+            }
+        }
+    }
 
     // Start is called before the first frame update
-    void Start()
+    protected virtual void Start()
     {
         
     }
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         
     }
 
-    public virtual void FreezeTime()
+    protected virtual void FreezeTimeAction()
     {
         if (_rigidbody)
         {
@@ -30,16 +50,22 @@ public class Entity : MonoBehaviour
             _rigidbody.isKinematic = true;
         }
 
+        if (_animator)
+            _animator.speed = 0;
+
         isFreezed = true;
     }
 
-    public virtual void UnFreezeTime()
+    protected virtual void UnFreezeTimeAction()
     {
         if (_rigidbody)
         {
             _rigidbody.useGravity = true;
             _rigidbody.isKinematic = false;
         }
+
+        if (_animator)
+            _animator.speed = 1;
 
         isFreezed = false;
     }

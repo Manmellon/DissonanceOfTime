@@ -160,10 +160,7 @@ public class Player : MonoBehaviour
                 Entity entity = hit.collider.gameObject.GetComponentInParent<Entity>();
                 if (entity)
                 {
-                    if (entity.isFreezed)
-                        entity.UnFreezeTime();
-                    else
-                        entity.FreezeTime();
+                    entity.isFreezed = !entity.isFreezed;
                 }
             }
         }
