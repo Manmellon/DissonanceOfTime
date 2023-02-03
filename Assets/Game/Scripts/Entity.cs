@@ -52,8 +52,6 @@ public class Entity : MonoBehaviour
 
         if (_animator)
             _animator.speed = 0;
-
-        isFreezed = true;
     }
 
     protected virtual void UnFreezeTimeAction()
@@ -66,7 +64,5 @@ public class Entity : MonoBehaviour
 
         if (_animator)
             _animator.speed = 1;
-
-        isFreezed = false;
     }
 }
