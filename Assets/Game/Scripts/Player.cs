@@ -149,17 +149,24 @@ public class Player : MonoBehaviour
 
         transform.Rotate(Vector3.up * mouseX);
 
-        RaycastHit hit;
-        //bool wasHit = Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out hit, interactionRange, interactionMask);
-        bool wasHit = Physics.SphereCast(player_camera.transform.position, 1.0f, player_camera.transform.forward, out hit);
-
-        if (wasHit)
+        if (Input.GetMouseButtonDown(0))
         {
-            Entity entity = hit.collider.gameObject.GetComponentInParent<Entity>();
-            if (entity)
+            RaycastHit hit;
+            //bool wasHit = Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out hit, interactionRange, interactionMask);
+            bool wasHit = Physics.SphereCast(player_camera.transform.position, 1.0f, player_camera.transform.forward, out hit);
+
+            if (wasHit)
             {
-                entity.FreezeTime();
+                Entity entity = hit.collider.gameObject.GetComponentInParent<Entity>();
+                if (entity)
+                {
+                    if (entity.isFreezed)
+                        entity.UnFreezeTime();
+                    else
+                        entity.FreezeTime();
+                }
             }
         }
+
     }
 }

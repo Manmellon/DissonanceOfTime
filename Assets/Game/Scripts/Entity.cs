@@ -6,6 +6,8 @@ public class Entity : MonoBehaviour
 {
     public Rigidbody _rigidbody;
 
+    public bool isFreezed;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +23,18 @@ public class Entity : MonoBehaviour
     public virtual void FreezeTime()
     {
         _rigidbody.useGravity = false;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.angularVelocity = Vector3.zero;
         _rigidbody.isKinematic = true;
+
+        isFreezed = true;
+    }
+
+    public virtual void UnFreezeTime()
+    {
+        _rigidbody.useGravity = true;
+        _rigidbody.isKinematic = false;
+
+        isFreezed = false;
     }
 }
