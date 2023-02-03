@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1886156484839103944}
+  - component: {fileID: 2837249379616655031}
   - component: {fileID: 9107012729879565625}
   m_Layer: 6
   m_Name: vent
@@ -37,6 +38,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 180, y: 0, z: 0}
+--- !u!95 &2837249379616655031
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1254017170653972338}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 94e6bdbe1018de549a22d9ac800255f9, type: 3}
+  m_Controller: {fileID: 9100000, guid: e578a07e9c2edb94c80d246f82ba551f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
 --- !u!114 &9107012729879565625
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -51,6 +72,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 0}
   isFreezed: 0
+  isOn: 0
 --- !u!1 &1591445165188914777
 GameObject:
   m_ObjectHideFlags: 0
