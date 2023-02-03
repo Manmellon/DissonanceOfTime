@@ -30,15 +30,19 @@ public class Fan : SwitchingEntity
         base.TurnedOnAction();
 
         if (mode == FanMode.UP)
-            _animator.Play("RotateLeft");
+            _animator.SetBool("RotateLeft", true);
         else
-            _animator.Play("RotateRight");
+            _animator.SetBool("RotateRight", true);
     }
 
     public override void TurnedOffAction()
     {
         base.TurnedOffAction();
 
-        _animator.Play("Idle");
+        //_animator.Play("Idle");
+        if (mode == FanMode.UP)
+            _animator.SetBool("RotateLeft", false);
+        else
+            _animator.SetBool("RotateRight", false);
     }
 }
