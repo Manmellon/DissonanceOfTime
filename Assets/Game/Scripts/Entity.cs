@@ -22,18 +22,24 @@ public class Entity : MonoBehaviour
 
     public virtual void FreezeTime()
     {
-        _rigidbody.useGravity = false;
-        _rigidbody.velocity = Vector3.zero;
-        _rigidbody.angularVelocity = Vector3.zero;
-        _rigidbody.isKinematic = true;
+        if (_rigidbody)
+        {
+            _rigidbody.useGravity = false;
+            _rigidbody.velocity = Vector3.zero;
+            _rigidbody.angularVelocity = Vector3.zero;
+            _rigidbody.isKinematic = true;
+        }
 
         isFreezed = true;
     }
 
     public virtual void UnFreezeTime()
     {
-        _rigidbody.useGravity = true;
-        _rigidbody.isKinematic = false;
+        if (_rigidbody)
+        {
+            _rigidbody.useGravity = true;
+            _rigidbody.isKinematic = false;
+        }
 
         isFreezed = false;
     }
