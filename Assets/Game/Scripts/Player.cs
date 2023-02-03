@@ -19,8 +19,8 @@ public class Player : MonoBehaviour
     public float runMultiplier = 2.0f;
     public float crouchMultiplier = 0.5f;
 
-    private Vector3 fallingVelocity;
-    public float gravity = -9.8f;
+    [SerializeField]private Vector3 fallingVelocity;
+    //public float gravity = -9.8f;
     public float jumpHeight;
 
     private float xRotation;
@@ -51,16 +51,19 @@ public class Player : MonoBehaviour
     {
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
 
-        if (isGrounded && fallingVelocity.y < 0)
+        //????
+        //We do it, so gravity not will be accumulate too much when standing on ground
+        if (isGrounded && fallingVelocity.magnitude > Physics.gravity.normalized.magnitude)
         {
-            fallingVelocity.y = -2.0f;
+            fallingVelocity = Physics.gravity.normalized;
         }
 
         if (isGrounded && Input.GetKey(KeyCode.Space))
         {
             isGrounded = false;
 
-            fallingVelocity.y = Mathf.Sqrt(jumpHeight * -2f * gravity);
+            //fallingVelocity.y = Mathf.Sqrt(jumpHeight * 2f * gravity);
+            fallingVelocity = -Mathf.Sqrt(jumpHeight * 2f * Physics.gravity.magnitude) * Physics.gravity.normalized;
 
             //jumpTimer = 1;
             //anim.SetBool("Jumping", true);
@@ -133,7 +136,7 @@ public class Player : MonoBehaviour
 
         controller.Move(move * resultSpeed * Time.deltaTime);
 
-        fallingVelocity.y += gravity * Time.deltaTime;
+        fallingVelocity += Physics.gravity * Time.deltaTime;
         controller.Move(fallingVelocity * Time.deltaTime);
 
         float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;// * Time.deltaTime;
@@ -145,5 +148,18 @@ public class Player : MonoBehaviour
         player_camera.transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
 
         transform.Rotate(Vector3.up * mouseX);
+
+        RaycastHit hit;
+        //bool wasHit = Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out hit, interactionRange, interactionMask);
+        bool wasHit = Physics.SphereCast(player_camera.transform.position, 1.0f, player_camera.transform.forward, out hit);
+
+        if (wasHit)
+        {
+            Entity entity = hit.collider.gameObject.GetComponentInParent<Entity>();
+            if (entity)
+            {
+                entity.FreezeTime();
+            }
+        }
     }
 }
