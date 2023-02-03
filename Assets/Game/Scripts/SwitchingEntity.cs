@@ -60,6 +60,11 @@ public class SwitchingEntity : Entity
         Material[] mats = indicatorMesh.materials;
         mats[material_index] = enabledMaterial;
         indicatorMesh.materials = mats;
+
+        if (_particleSystem)
+        {
+            _particleSystem.Play();
+        }
     }
 
     public virtual void TurnedOffAction()
@@ -67,5 +72,10 @@ public class SwitchingEntity : Entity
         Material[] mats = indicatorMesh.materials;
         mats[material_index] = disabledMaterial;
         indicatorMesh.materials = mats;
+
+        if (_particleSystem)
+        {
+            _particleSystem.Stop();
+        }
     }
 }

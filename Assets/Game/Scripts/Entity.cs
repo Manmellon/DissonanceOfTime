@@ -8,6 +8,7 @@ public class Entity : MonoBehaviour
     public Rigidbody _rigidbody;
     public Animator _animator;
     public AudioSource _audioSource;
+    public ParticleSystem _particleSystem;
 
     [Header("Entity")]
     [SerializeField]private bool _isFreezed;
@@ -50,6 +51,11 @@ public class Entity : MonoBehaviour
             _rigidbody.isKinematic = true;
         }
 
+        if (_particleSystem)
+        {
+            _particleSystem.Pause();
+        }
+
         if (_animator)
             _animator.speed = 0;
     }
@@ -60,6 +66,11 @@ public class Entity : MonoBehaviour
         {
             _rigidbody.useGravity = true;
             _rigidbody.isKinematic = false;
+        }
+
+        if (_particleSystem)
+        {
+            _particleSystem.Play();
         }
 
         if (_animator)
