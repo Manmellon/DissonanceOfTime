@@ -66,6 +66,10 @@ public class Fan : SwitchingEntity
                 powerVector = fanPower * transform.up;
             else
                 powerVector = fanPower * -transform.up;
+
+            entity._rigidbody.transform.rotation = Quaternion.identity;
+            entity._rigidbody.angularVelocity = Vector3.zero;
+
             entity._rigidbody.AddForce(powerVector, ForceMode.Impulse);
         }
     }
