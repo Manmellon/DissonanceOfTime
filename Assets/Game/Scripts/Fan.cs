@@ -54,7 +54,7 @@ public class Fan : SwitchingEntity
         if (!isOn || isFreezed) return;
 
         //float windPower = fanPower * Mathf.Clamp(maxWindDistance - Vector3.Distance(transform.position, other.transform.position), Physics.gravity.magnitude, maxWindDistance);
-        float windPower = 2*Physics.gravity.magnitude - Physics.gravity.magnitude / maxWindDistance * Mathf.Clamp(Vector3.Distance(transform.position, other.transform.position), 0, maxWindDistance);
+        float windPower = Physics.gravity.magnitude + 40 * (1 - Mathf.Clamp(Vector3.Distance(transform.position, other.transform.position), 0, maxWindDistance) / maxWindDistance);
 
         Debug.Log(windPower);
         /*if (windPower < Physics.gravity.magnitude)
