@@ -9,6 +9,7 @@ public class Fan : SwitchingEntity
     public FanMode mode;
 
     public float fanPower;
+    public float maxWindDistance;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -52,11 +53,21 @@ public class Fan : SwitchingEntity
     {
         if (!isOn || isFreezed) return;
 
+        //float windPower = fanPower * Mathf.Clamp(maxWindDistance - Vector3.Distance(transform.position, other.transform.position), Physics.gravity.magnitude, maxWindDistance);
+        float windPower = Physics.gravity.magnitude + Physics.gravity.magnitude / maxWindDistance * Mathf.Clamp(maxWindDistance - Vector3.Distance(transform.position, other.transform.position), 0, maxWindDistance);
+
+        Debug.Log(windPower);
+
+        /*if (windPower < Physics.gravity.magnitude)
+            windPower = Physics.gravity.magnitude;
+            */
+        
+
         Vector3 powerVector;
         if (mode == FanMode.UP)
-            powerVector = fanPower * transform.up;
+            powerVector = windPower * transform.up;
         else
-            powerVector = fanPower * -transform.up;
+            powerVector = windPower * -transform.up;
 
 
         if (other.CompareTag("Player"))
@@ -74,7 +85,7 @@ public class Fan : SwitchingEntity
             entity._rigidbody.transform.rotation = Quaternion.identity;
             entity._rigidbody.angularVelocity = Vector3.zero;
 
-            entity._rigidbody.AddForce(powerVector, ForceMode.Impulse);
+            entity._rigidbody.AddForce(powerVector, ForceMode.Acceleration);
         }
     }
 }

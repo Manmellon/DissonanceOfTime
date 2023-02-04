@@ -154,6 +154,7 @@ public class Player : MonoBehaviour
             RaycastHit hit;
             //bool wasHit = Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out hit, interactionRange, interactionMask);
             bool wasHit = Physics.SphereCast(player_camera.transform.position, 1.0f, player_camera.transform.forward, out hit);
+            //must use SphereCastAll and maybe sort by distance
 
             if (wasHit)
             {
