@@ -5,8 +5,10 @@ using UnityEngine;
 public enum FanMode { UP, DOWN}
 public class Fan : SwitchingEntity
 {
-    [Header("Fan Components")]
+    [Header("Fan")]
     public FanMode mode;
+
+    public float fanPower;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -44,5 +46,27 @@ public class Fan : SwitchingEntity
             _animator.SetBool("RotateLeft", false);
         else
             _animator.SetBool("RotateRight", false);
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (!isOn) return;
+
+        if (other.CompareTag("Player"))
+        {
+
+        }
+        else
+        {
+            Entity entity = other.GetComponentInParent<Entity>();
+            if (entity == null) return;
+
+            Vector3 powerVector;
+            if (mode == FanMode.UP)
+                powerVector = fanPower * transform.up;
+            else
+                powerVector = fanPower * -transform.up;
+            entity._rigidbody.AddForce(powerVector, ForceMode.Impulse);
+        }
     }
 }
