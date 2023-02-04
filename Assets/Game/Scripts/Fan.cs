@@ -84,7 +84,10 @@ public class Fan : SwitchingEntity
             entity._rigidbody.transform.rotation = Quaternion.identity;
             entity._rigidbody.angularVelocity = Vector3.zero;
 
-            entity._rigidbody.AddForce(powerVector, ForceMode.Acceleration);
+            var acceleration = (entity._rigidbody.velocity - entity.lastVelocity) / Time.fixedDeltaTime;
+            entity.lastVelocity = entity._rigidbody.velocity;
+
+            entity._rigidbody.AddForce(powerVector - acceleration, ForceMode.Acceleration);
         }
     }
 }

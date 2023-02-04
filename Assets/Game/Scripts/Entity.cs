@@ -12,6 +12,9 @@ public class Entity : MonoBehaviour
 
     [Header("Entity")]
     [SerializeField]private bool _isFreezed;
+
+    [HideInInspector]public Vector3 lastVelocity;
+
     public bool isFreezed
     {
         get { return _isFreezed; }
