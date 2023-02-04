@@ -52,21 +52,25 @@ public class Fan : SwitchingEntity
     {
         if (!isOn) return;
 
+        Vector3 powerVector;
+        if (mode == FanMode.UP)
+            powerVector = fanPower * transform.up;
+        else
+            powerVector = fanPower * -transform.up;
+
+
         if (other.CompareTag("Player"))
         {
+            Player player = other.GetComponentInParent<Player>();
 
+            player.controller.Move(powerVector);
         }
         else
         {
             Entity entity = other.GetComponentInParent<Entity>();
             if (entity == null) return;
 
-            Vector3 powerVector;
-            if (mode == FanMode.UP)
-                powerVector = fanPower * transform.up;
-            else
-                powerVector = fanPower * -transform.up;
-
+            
             entity._rigidbody.transform.rotation = Quaternion.identity;
             entity._rigidbody.angularVelocity = Vector3.zero;
 

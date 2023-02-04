@@ -109,7 +109,7 @@ ModelImporter:
     legStretch: 0.05
     feetSpacing: 0
     globalScale: 1
-    rootMotionBoneName: 
+    rootMotionBoneName: Cube
     hasTranslationDoF: 0
     hasExtraRoot: 0
     skeletonHasParents: 1
