@@ -176,7 +176,7 @@ MonoBehaviour:
   disabledMaterial: {fileID: 2100000, guid: 21bce8db78fdddb46b109bc8549523a7, type: 2}
   _isOn: 0
   mode: 0
-  fanPower: 1.5
+  fanPower: 1
 --- !u!136 &9112505558953345554
 CapsuleCollider:
   m_ObjectHideFlags: 0
