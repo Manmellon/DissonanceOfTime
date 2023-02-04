@@ -50,7 +50,7 @@ public class Fan : SwitchingEntity
 
     private void OnTriggerStay(Collider other)
     {
-        if (!isOn) return;
+        if (!isOn || isFreezed) return;
 
         Vector3 powerVector;
         if (mode == FanMode.UP)
