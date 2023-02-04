@@ -170,6 +170,7 @@ MonoBehaviour:
   _audioSource: {fileID: 329468327554712486}
   _particleSystem: {fileID: 160458489000330203}
   _isFreezed: 0
+  lastVelocity: {x: 0, y: 0, z: 0}
   indicatorMesh: {fileID: 2496687154317389036}
   material_index: 1
   enabledMaterial: {fileID: 2100000, guid: 2787966255f7d484b84a1492ef35e685, type: 2}
@@ -189,9 +190,9 @@ CapsuleCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   m_Radius: 0.8
-  m_Height: 20
+  m_Height: 10
   m_Direction: 1
-  m_Center: {x: 0, y: 9, z: 0}
+  m_Center: {x: 0, y: 4.5, z: 0}
 --- !u!1 &1591445165188914777
 GameObject:
   m_ObjectHideFlags: 0

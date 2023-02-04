@@ -54,7 +54,12 @@ public class Fan : SwitchingEntity
         if (!isOn || isFreezed) return;
 
         //float windPower = fanPower * Mathf.Clamp(maxWindDistance - Vector3.Distance(transform.position, other.transform.position), Physics.gravity.magnitude, maxWindDistance);
-        float windPower = Physics.gravity.magnitude + 40 * (1 - Mathf.Clamp(Vector3.Distance(transform.position, other.transform.position), 0, maxWindDistance) / maxWindDistance);
+
+        //float windPower = Physics.gravity.magnitude + 40 * (1 - Mathf.Clamp(Vector3.Distance(transform.position, other.transform.position), 0, maxWindDistance) / maxWindDistance);
+        float x = Mathf.Clamp(Vector3.Distance(transform.position, other.transform.position), 0, maxWindDistance);
+        //float windPower = Physics.gravity.magnitude + 40 * (1 - x / maxWindDistance);
+
+        float windPower = Physics.gravity.magnitude * x + 40 * (1 - x * x / maxWindDistance / 2);
 
         Debug.Log(windPower);
         /*if (windPower < Physics.gravity.magnitude)
@@ -84,10 +89,11 @@ public class Fan : SwitchingEntity
             entity._rigidbody.transform.rotation = Quaternion.identity;
             entity._rigidbody.angularVelocity = Vector3.zero;
 
-            var acceleration = (entity._rigidbody.velocity - entity.lastVelocity) / Time.fixedDeltaTime;
+            /*var acceleration = (entity._rigidbody.velocity - entity.lastVelocity) / Time.fixedDeltaTime;
             entity.lastVelocity = entity._rigidbody.velocity;
 
-            entity._rigidbody.AddForce(powerVector - acceleration, ForceMode.Acceleration);
+            entity._rigidbody.AddForce(powerVector - acceleration, ForceMode.Acceleration);*/
+            entity._rigidbody.velocity = powerVector;
         }
     }
 }
