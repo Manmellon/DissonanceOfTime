@@ -575,7 +575,7 @@ MonoBehaviour:
   fallingVelocity: {x: 0, y: 0, z: 0}
   jumpHeight: 1
   groundCheck: {fileID: 1831871722}
-  groundDistance: 0.4
+  groundDistance: 0.5
   groundMask:
     serializedVersion: 2
     m_Bits: 64
