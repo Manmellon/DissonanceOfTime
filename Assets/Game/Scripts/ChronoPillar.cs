@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class ChronoPillar : SwitchingEntity
 {
-    // Start is called before the first frame update
-    void Start()
+    [Header("Chrono Pillar")]
+    public Transform topVertex;
+    public Transform bottomVertex;
+
+    protected override void Start()
     {
-        
+        base.Start();
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
-        
+        base.Update();
+        //for test
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Switch();
+        }
     }
 }
