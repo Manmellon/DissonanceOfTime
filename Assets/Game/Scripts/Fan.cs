@@ -54,7 +54,7 @@ public class Fan : SwitchingEntity
 
         float x = Mathf.Clamp(Vector3.Distance(transform.position, other.transform.position), 0, maxWindDistance);
 
-        float windPower = Physics.gravity.magnitude * x + 40 * (1 - x * x / maxWindDistance / 2);
+        float windPower = Physics.gravity.magnitude * x + 25 * (1 - x * x / maxWindDistance / 2);
 
         Vector3 powerVector;
         if (mode == FanMode.UP)
