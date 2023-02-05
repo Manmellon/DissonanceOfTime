@@ -419,6 +419,7 @@ MonoBehaviour:
   _audioSource: {fileID: 0}
   _particleSystem: {fileID: 0}
   _isFreezed: 0
+  lastVelocity: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,6 +569,7 @@ MonoBehaviour:
   _runAudio: {fileID: 0}
   mouseSensitivity: 1
   walkSpeed: 4
+  airSpeed: 4
   runMultiplier: 2
   crouchMultiplier: 0.5
   fallingVelocity: {x: 0, y: 0, z: 0}
@@ -579,6 +581,7 @@ MonoBehaviour:
     m_Bits: 64
   isGrounded: 0
   isCrouch: 0
+  isInWind: 0
 --- !u!143 &806162513
 CharacterController:
   m_ObjectHideFlags: 0

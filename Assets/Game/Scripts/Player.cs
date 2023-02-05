@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     public float mouseSensitivity;
 
     public float walkSpeed = 4.0f;
+    public float airSpeed;
     public float runMultiplier = 2.0f;
     public float crouchMultiplier = 0.5f;
 
@@ -32,8 +33,9 @@ public class Player : MonoBehaviour
     public bool isGrounded;
     public bool isCrouch;
 
-    public static Player singleton;
+    public bool isInWind;
 
+    public static Player singleton;
 
     void Awake()
     {
@@ -74,7 +76,9 @@ public class Player : MonoBehaviour
 
         Vector3 move = transform.right * horizontalInput + transform.forward * verticalInput;
 
-        float resultSpeed = walkSpeed;
+
+        float resultSpeed = isGrounded? walkSpeed : airSpeed;
+
         if (horizontalInput != 0 || verticalInput != 0)
         {
             if (Input.GetKey(KeyCode.LeftShift))

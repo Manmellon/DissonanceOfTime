@@ -42,7 +42,6 @@ public class Fan : SwitchingEntity
     {
         base.TurnedOffAction();
 
-        //_animator.Play("Idle");
         if (mode == FanMode.UP)
             _animator.SetBool("RotateLeft", false);
         else
@@ -53,19 +52,9 @@ public class Fan : SwitchingEntity
     {
         if (!isOn || isFreezed) return;
 
-        //float windPower = fanPower * Mathf.Clamp(maxWindDistance - Vector3.Distance(transform.position, other.transform.position), Physics.gravity.magnitude, maxWindDistance);
-
-        //float windPower = Physics.gravity.magnitude + 40 * (1 - Mathf.Clamp(Vector3.Distance(transform.position, other.transform.position), 0, maxWindDistance) / maxWindDistance);
         float x = Mathf.Clamp(Vector3.Distance(transform.position, other.transform.position), 0, maxWindDistance);
-        //float windPower = Physics.gravity.magnitude + 40 * (1 - x / maxWindDistance);
 
         float windPower = Physics.gravity.magnitude * x + 40 * (1 - x * x / maxWindDistance / 2);
-
-        Debug.Log(windPower);
-        /*if (windPower < Physics.gravity.magnitude)
-            windPower = Physics.gravity.magnitude;
-            */
-        
 
         Vector3 powerVector;
         if (mode == FanMode.UP)
@@ -77,6 +66,7 @@ public class Fan : SwitchingEntity
         if (other.CompareTag("Player"))
         {
             Player player = other.GetComponentInParent<Player>();
+            if (player == null) return;
 
             player.controller.Move(powerVector);
         }
@@ -85,7 +75,6 @@ public class Fan : SwitchingEntity
             Entity entity = other.GetComponentInParent<Entity>();
             if (entity == null) return;
 
-            
             entity._rigidbody.transform.rotation = Quaternion.identity;
             entity._rigidbody.angularVelocity = Vector3.zero;
 
