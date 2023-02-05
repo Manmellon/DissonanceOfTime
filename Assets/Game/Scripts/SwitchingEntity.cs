@@ -85,7 +85,8 @@ public class SwitchingEntity : Entity
 
         if (!isOn)
         {
-            _particleSystem.Stop();
+            if (_particleSystem)
+                _particleSystem.Stop();
         }
     }
 }
