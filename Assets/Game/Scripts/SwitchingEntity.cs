@@ -55,7 +55,7 @@ public class SwitchingEntity : Entity
         isOn = false;
     }
 
-    public virtual void TurnedOnAction()
+    protected virtual void TurnedOnAction()
     {
         Material[] mats = indicatorMesh.materials;
         mats[material_index] = enabledMaterial;
@@ -67,13 +67,23 @@ public class SwitchingEntity : Entity
         }
     }
 
-    public virtual void TurnedOffAction()
+    protected virtual void TurnedOffAction()
     {
         Material[] mats = indicatorMesh.materials;
         mats[material_index] = disabledMaterial;
         indicatorMesh.materials = mats;
 
         if (_particleSystem)
+        {
+            _particleSystem.Stop();
+        }
+    }
+
+    protected override void UnFreezeTimeAction()
+    {
+        base.UnFreezeTimeAction();
+
+        if (!isOn)
         {
             _particleSystem.Stop();
         }

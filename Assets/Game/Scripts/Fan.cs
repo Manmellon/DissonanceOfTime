@@ -28,7 +28,7 @@ public class Fan : SwitchingEntity
         }
     }
 
-    public override void TurnedOnAction()
+    protected override void TurnedOnAction()
     {
         base.TurnedOnAction();
 
@@ -38,7 +38,7 @@ public class Fan : SwitchingEntity
             _animator.SetBool("RotateRight", true);
     }
 
-    public override void TurnedOffAction()
+    protected override void TurnedOffAction()
     {
         base.TurnedOffAction();
 
