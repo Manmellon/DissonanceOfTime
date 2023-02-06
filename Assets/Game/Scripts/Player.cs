@@ -155,12 +155,22 @@ public class Player : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            RaycastHit hit;
+            RaycastHit[] hits;
             //bool wasHit = Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out hit, interactionRange, interactionMask);
-            bool wasHit = Physics.SphereCast(player_camera.transform.position, 1.0f, player_camera.transform.forward, out hit);
+            //bool wasHit = Physics.SphereCast(player_camera.transform.position, 1.0f, player_camera.transform.forward, out hit);
+            /*if (wasHit)
+            {
+                Entity entity = hit.collider.gameObject.GetComponentInParent<Entity>();
+                if (entity)
+                {
+                    entity.isFreezed = !entity.isFreezed;
+                }
+            }*/
             //must use SphereCastAll and maybe sort by distance
 
-            if (wasHit)
+            hits = Physics.SphereCastAll(player_camera.transform.position, 1.0f, player_camera.transform.forward);
+
+            foreach (var hit in hits)
             {
                 Entity entity = hit.collider.gameObject.GetComponentInParent<Entity>();
                 if (entity)
@@ -168,6 +178,7 @@ public class Player : MonoBehaviour
                     entity.isFreezed = !entity.isFreezed;
                 }
             }
+            
         }
 
     }

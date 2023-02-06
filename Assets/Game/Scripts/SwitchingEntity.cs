@@ -57,9 +57,12 @@ public class SwitchingEntity : Entity
 
     protected virtual void TurnedOnAction()
     {
-        Material[] mats = indicatorMesh.materials;
-        mats[material_index] = enabledMaterial;
-        indicatorMesh.materials = mats;
+        if (indicatorMesh)
+        {
+            Material[] mats = indicatorMesh.materials;
+            mats[material_index] = enabledMaterial;
+            indicatorMesh.materials = mats;
+        }
 
         if (_particleSystem)
         {
@@ -69,9 +72,12 @@ public class SwitchingEntity : Entity
 
     protected virtual void TurnedOffAction()
     {
-        Material[] mats = indicatorMesh.materials;
-        mats[material_index] = disabledMaterial;
-        indicatorMesh.materials = mats;
+        if (indicatorMesh)
+        {
+            Material[] mats = indicatorMesh.materials;
+            mats[material_index] = disabledMaterial;
+            indicatorMesh.materials = mats;
+        }
 
         if (_particleSystem)
         {
