@@ -168,11 +168,10 @@ public class Player : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out hit, interactionRange, interactionMask))
                 {
-                    Debug.Log("raycasted");
                     Entity entity = hit.transform.GetComponent<Entity>();
                     if (entity && entity.isDraggable)
                     {
-                        entity.transform.SetParent(transform);
+                        entity.transform.SetParent(player_camera.transform);
 
                         holdingItem = entity;
                         wasItemUseGravity = entity._rigidbody.useGravity;
