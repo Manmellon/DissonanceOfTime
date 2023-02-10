@@ -24,15 +24,15 @@ public class Entity : MonoBehaviour
         get { return _isFreezed; }
         set
         {
-            _isFreezed = value;
-            if (value)
+            if (value && !_isFreezed)
             {
                 FreezeTimeAction();
             }
-            else
+            else if (!value && _isFreezed)
             {
                 UnFreezeTimeAction();
             }
+            _isFreezed = value;
         }
     }
 
@@ -50,6 +50,7 @@ public class Entity : MonoBehaviour
 
     protected virtual void FreezeTimeAction()
     {
+        Debug.Log("FreezeAction");
         if (_rigidbody)
         {
             unfreezeIsKinematic = _rigidbody.isKinematic;
@@ -72,6 +73,7 @@ public class Entity : MonoBehaviour
 
     protected virtual void UnFreezeTimeAction()
     {
+        Debug.Log("UnFreezeAction");
         if (_rigidbody)
         {
             _rigidbody.useGravity = unfreezeUseGravity;

@@ -165,12 +165,14 @@ public class Player : MonoBehaviour
         {
             if (holdingItem == null)
             {
+                
                 RaycastHit hit;
                 if (Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out hit, interactionRange, interactionMask))
                 {
                     Entity entity = hit.transform.GetComponentInParent<Entity>();
                     if (entity && entity.isDraggable)
                     {
+                        Debug.Log("Pick item");
                         entity.transform.SetParent(player_camera.transform);
 
                         holdingItem = entity;
@@ -188,6 +190,7 @@ public class Player : MonoBehaviour
             }
             else
             {
+                Debug.Log("Drop item");
                 holdingItem._rigidbody.useGravity = wasItemUseGravity;
                 holdingItem._rigidbody.isKinematic = wasItemKinematic;
                 holdingItem.gameObject.layer = wasItemLayer;
