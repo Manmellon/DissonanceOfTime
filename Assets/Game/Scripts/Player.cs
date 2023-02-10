@@ -39,9 +39,9 @@ public class Player : MonoBehaviour
     public bool isInWind;
 
     public Entity holdingItem;
-    private bool wasItemKinematic;
-    private bool wasItemUseGravity;
-    private int wasItemLayer;
+    [SerializeField] private bool wasItemKinematic;
+    [SerializeField] private bool wasItemUseGravity;
+    [SerializeField] private int wasItemLayer;
 
     public static Player singleton;
 
@@ -165,7 +165,6 @@ public class Player : MonoBehaviour
         {
             if (holdingItem == null)
             {
-                
                 RaycastHit hit;
                 if (Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out hit, interactionRange, interactionMask))
                 {

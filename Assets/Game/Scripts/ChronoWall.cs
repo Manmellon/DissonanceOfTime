@@ -78,6 +78,11 @@ public class ChronoWall : MonoBehaviour
         CheckRayCasts();
     }
 
+    private void LateUpdate()
+    {
+        //CheckRayCasts();
+    }
+
     public void CheckRayCasts()
     {
         //First unfreeze all
