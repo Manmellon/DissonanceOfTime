@@ -934,7 +934,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshFilter: {fileID: 596962884}
+  meshCollider: {fileID: 596962882}
   meshFilterBack: {fileID: 427286942}
+  meshColliderBack: {fileID: 427286943}
   chronoPillarA: {fileID: 57239181}
   chronoPillarB: {fileID: 1278520974}
 --- !u!1 &1578211325

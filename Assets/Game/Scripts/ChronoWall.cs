@@ -5,7 +5,11 @@ using UnityEngine;
 public class ChronoWall : MonoBehaviour
 {
     public MeshFilter meshFilter;
+    public MeshCollider meshCollider;
+
     public MeshFilter meshFilterBack;
+    public MeshCollider meshColliderBack;
+
 
     public ChronoPillar chronoPillarA;
     public ChronoPillar chronoPillarB;
@@ -53,6 +57,10 @@ public class ChronoWall : MonoBehaviour
 
         meshFilter.mesh.RecalculateBounds();
 
+        meshCollider.sharedMesh = meshFilter.mesh;
+
+        //And for back face
+
         meshFilterBack.mesh.SetVertices(vertices);
         int[] backTris = new int[6]
         {
@@ -68,5 +76,7 @@ public class ChronoWall : MonoBehaviour
         meshFilterBack.mesh.uv = uv;
 
         meshFilterBack.mesh.RecalculateBounds();
+
+        meshColliderBack.sharedMesh = meshFilterBack.mesh;
     }
 }
