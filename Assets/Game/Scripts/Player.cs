@@ -39,9 +39,9 @@ public class Player : MonoBehaviour
     public bool isInWind;
 
     public Entity holdingItem;
-    //[SerializeField] private bool wasItemKinematic;
-    //[SerializeField] private bool wasItemUseGravity;
-    //[SerializeField] private int wasItemLayer;
+    [SerializeField] private bool wasItemIsKinematic;
+    [SerializeField] private bool wasItemUseGravity;
+    [SerializeField] private int wasItemLayer;
 
     public static Player singleton;
 
@@ -175,9 +175,9 @@ public class Player : MonoBehaviour
                         entity.transform.SetParent(player_camera.transform);
 
                         holdingItem = entity;
-                        entity.wasItemUseGravity = entity._rigidbody.useGravity;
-                        entity.wasItemIsKinematic = entity._rigidbody.isKinematic;
-                        entity.wasItemLayer = entity.gameObject.layer;
+                        wasItemUseGravity = entity._rigidbody.useGravity;
+                        wasItemIsKinematic = entity._rigidbody.isKinematic;
+                        wasItemLayer = entity.gameObject.layer;
 
                         entity._rigidbody.useGravity = false;
                         entity._rigidbody.isKinematic = true;
@@ -190,9 +190,9 @@ public class Player : MonoBehaviour
             else
             {
                 Debug.Log("Drop item");
-                holdingItem._rigidbody.useGravity = holdingItem.wasItemUseGravity;
-                holdingItem._rigidbody.isKinematic = holdingItem.wasItemIsKinematic;
-                holdingItem.gameObject.layer = holdingItem.wasItemLayer;
+                holdingItem._rigidbody.useGravity = wasItemUseGravity;
+                holdingItem._rigidbody.isKinematic = wasItemIsKinematic;
+                holdingItem.gameObject.layer = wasItemLayer;
 
                 if (holdingItem.resetRotationAfterDrop)
                     holdingItem.transform.rotation = Quaternion.identity;

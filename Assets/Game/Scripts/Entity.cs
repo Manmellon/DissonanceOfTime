@@ -16,9 +16,9 @@ public class Entity : MonoBehaviour
     public bool resetRotationAfterDrop;
     [SerializeField]private bool _isFreezed;
 
-    public bool wasItemUseGravity;
-    public bool wasItemIsKinematic;
-    public int wasItemLayer;
+    public bool unfreezedUseGravity;
+    public bool unfreezedIsKinematic;
+    //public int wasItemLayer;
 
     public bool isFreezed
     {
@@ -54,8 +54,8 @@ public class Entity : MonoBehaviour
         Debug.Log("FreezeAction");
         if (_rigidbody)
         {
-            wasItemIsKinematic = _rigidbody.isKinematic;
-            wasItemUseGravity = _rigidbody.useGravity;
+            unfreezedIsKinematic = _rigidbody.isKinematic;
+            unfreezedUseGravity = _rigidbody.useGravity;
 
             _rigidbody.useGravity = false;
             _rigidbody.velocity = Vector3.zero;
@@ -74,11 +74,12 @@ public class Entity : MonoBehaviour
 
     protected virtual void UnFreezeTimeAction()
     {
-        Debug.Log("UnFreezeAction");
+        
         if (_rigidbody/* && Player.singleton.holdingItem != this*/)
         {
-            _rigidbody.useGravity = wasItemUseGravity;
-            _rigidbody.isKinematic = wasItemIsKinematic;
+            Debug.Log("UnFreezeAction");
+            _rigidbody.useGravity = unfreezedUseGravity;
+            _rigidbody.isKinematic = unfreezedIsKinematic;
         }
 
         if (_particleSystem)
