@@ -192,6 +192,9 @@ public class Player : MonoBehaviour
                 holdingItem._rigidbody.isKinematic = wasItemKinematic;
                 holdingItem.gameObject.layer = wasItemLayer;
 
+                if (holdingItem.resetRotationAfterDrop)
+                    holdingItem.transform.rotation = Quaternion.identity;
+
                 holdingItem.transform.SetParent(null);
 
                 Physics.IgnoreCollision(controller, holdingItem._collider, false);

@@ -13,6 +13,7 @@ public class Entity : MonoBehaviour
 
     [Header("Entity")]
     public bool isDraggable;
+    public bool resetRotationAfterDrop;
     [SerializeField]private bool _isFreezed;
 
     [HideInInspector]public Vector3 lastVelocity;
