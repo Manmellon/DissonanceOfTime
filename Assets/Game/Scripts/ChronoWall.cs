@@ -6,9 +6,11 @@ public class ChronoWall : MonoBehaviour
 {
     public MeshFilter meshFilter;
     public MeshCollider meshCollider;
+    //public BoxCollider meshCollider;
 
     public MeshFilter meshFilterBack;
     public MeshCollider meshColliderBack;
+    //public BoxCollider meshColliderBack;
 
 
     public ChronoPillar chronoPillarA;
@@ -18,6 +20,24 @@ public class ChronoWall : MonoBehaviour
     void Start()
     {
         
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Entity entity = other.gameObject.GetComponentInParent<Entity>();
+        if (entity)
+        {
+            entity.isFreezed = true;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        Entity entity = other.gameObject.GetComponentInParent<Entity>();
+        if (entity)
+        {
+            entity.isFreezed = false;
+        }
     }
 
     // Update is called once per frame
@@ -58,6 +78,10 @@ public class ChronoWall : MonoBehaviour
         meshFilter.mesh.RecalculateBounds();
 
         meshCollider.sharedMesh = meshFilter.mesh;
+        //meshCollider.center = meshFilter.mesh.bounds.center;
+        //meshCollider.size = meshFilter.mesh.bounds.size;
+        Destroy(meshFilter.GetComponent<BoxCollider>());
+        meshFilter.gameObject.AddComponent<BoxCollider>().isTrigger = true;
 
         //And for back face
 
@@ -78,5 +102,10 @@ public class ChronoWall : MonoBehaviour
         meshFilterBack.mesh.RecalculateBounds();
 
         meshColliderBack.sharedMesh = meshFilterBack.mesh;
+        //meshColliderBack.center = meshFilterBack.mesh.bounds.center;
+        //meshColliderBack.size = meshFilterBack.mesh.bounds.size;
+
+        //Destroy(meshFilterBack.GetComponent<BoxCollider>());
+        //meshFilterBack.gameObject.AddComponent<BoxCollider>();
     }
 }
