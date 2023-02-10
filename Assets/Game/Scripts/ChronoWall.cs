@@ -51,6 +51,8 @@ public class ChronoWall : MonoBehaviour
         };
         meshFilter.mesh.uv = uv;
 
+        meshFilter.mesh.RecalculateBounds();
+
         meshFilterBack.mesh.SetVertices(vertices);
         int[] backTris = new int[6]
         {
@@ -64,5 +66,7 @@ public class ChronoWall : MonoBehaviour
         meshFilterBack.mesh.SetNormals(normals);
 
         meshFilterBack.mesh.uv = uv;
+
+        meshFilterBack.mesh.RecalculateBounds();
     }
 }
