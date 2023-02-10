@@ -156,7 +156,6 @@ GameObject:
   - component: {fileID: 427286945}
   - component: {fileID: 427286942}
   - component: {fileID: 427286944}
-  - component: {fileID: 427286947}
   m_Layer: 2
   m_Name: Back[Quad]
   m_TagString: Untagged
@@ -229,20 +228,6 @@ Transform:
   m_Father: {fileID: 1510799997}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &427286947
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 427286941}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &435165887
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,8 +315,6 @@ GameObject:
   - component: {fileID: 596962885}
   - component: {fileID: 596962884}
   - component: {fileID: 596962883}
-  - component: {fileID: 596962887}
-  - component: {fileID: 596962888}
   m_Layer: 2
   m_Name: Front[Quad]
   m_TagString: Untagged
@@ -404,33 +387,6 @@ Transform:
   m_Father: {fileID: 1510799997}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!64 &596962887
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 596962881}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
---- !u!65 &596962888
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 596962881}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 6.1232336e-17}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -948,9 +904,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   meshFilter: {fileID: 596962884}
-  meshCollider: {fileID: 596962887}
+  meshCollider: {fileID: 0}
   meshFilterBack: {fileID: 427286942}
-  meshColliderBack: {fileID: 427286947}
+  meshColliderBack: {fileID: 0}
   chronoLayers:
     serializedVersion: 2
     m_Bits: 65
