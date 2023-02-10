@@ -6,13 +6,26 @@ public class Button : SwitchingEntity
 {
     [Header("Button")]
     public ButtonCollider buttonCollider;
+    public Collider pressingCollider;
+    public Collider baseCollider;
+
     public SwitchingEntity influencedSwitchEntity;
+
+    protected override void Start()
+    {
+        base.Start();
+
+        Physics.IgnoreCollision(pressingCollider, baseCollider);
+    }
+
 
     protected override void TurnedOnAction()
     {
         base.TurnedOnAction();
 
         influencedSwitchEntity.TurnOn();
+
+        _animator.SetBool("Pressed", true);
     }
 
     protected override void TurnedOffAction()
@@ -20,6 +33,8 @@ public class Button : SwitchingEntity
         base.TurnedOffAction();
 
         influencedSwitchEntity.TurnOff();
+
+        _animator.SetBool("Pressed", false);
     }
 
     private void OnTriggerStay(Collider other)

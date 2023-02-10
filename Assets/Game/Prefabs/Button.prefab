@@ -144,7 +144,7 @@ Animator:
   m_GameObject: {fileID: 2977162897855087745}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 8a32d30b463fcba4d974eed3aadddd84, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4537836c7cda8314390bdff456aa6b06, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -274,6 +274,8 @@ MonoBehaviour:
   disabledMaterial: {fileID: 0}
   _isOn: 0
   buttonCollider: {fileID: 5242374533269837596}
+  pressingCollider: {fileID: 5242374533269837597}
+  baseCollider: {fileID: 8684664773450164457}
   influencedSwitchEntity: {fileID: 0}
 --- !u!65 &8429328489822127230
 BoxCollider:
@@ -349,7 +351,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5134378947908945636}
   m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071067}
-  m_LocalPosition: {x: -0.015993863, y: -1.0515548, z: -0.000020563602}
+  m_LocalPosition: {x: -0.01599386, y: -1.0515548, z: -0.0000205636}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
