@@ -12,9 +12,12 @@ public class ChronoWall : MonoBehaviour
     public MeshCollider meshColliderBack;
     //public BoxCollider meshColliderBack;
 
-
+    public LayerMask chronoLayers;
+    
     public ChronoPillar chronoPillarA;
     public ChronoPillar chronoPillarB;
+
+    [SerializeField] private List<Entity> _frozenEntities = new List<Entity>();
 
     // Start is called before the first frame update
     void Start()
@@ -107,5 +110,51 @@ public class ChronoWall : MonoBehaviour
 
         //Destroy(meshFilterBack.GetComponent<BoxCollider>());
         //meshFilterBack.gameObject.AddComponent<BoxCollider>();
+
+        CheckRayCasts();
+    }
+
+    public void CheckRayCasts()
+    {
+        //First unfreeze all
+        foreach (var entity in _frozenEntities)
+        {
+            entity.isFreezed = false;
+        }
+        _frozenEntities.Clear();
+
+        //Then create new List of frozen (may cause freese flickering, need think later...)
+
+        int rayCount = 5;
+
+        for (int i = 0; i < rayCount; i++)
+        {
+            RaycastHit hit;
+
+            Vector3 a = Vector3.Lerp(chronoPillarA.topVertex.position, chronoPillarA.bottomVertex.position, (float)i / rayCount);
+            Vector3 b = Vector3.Lerp(chronoPillarB.topVertex.position, chronoPillarB.bottomVertex.position, (float)i / rayCount);
+
+            var ray = new Ray(a, b-a);
+
+            if (Physics.Raycast(ray, out hit, (chronoPillarB.topVertex.position - chronoPillarA.topVertex.position).magnitude, chronoLayers))
+            {
+                Entity entity = hit.collider.gameObject.GetComponentInParent<Entity>();
+                if (entity && entity != chronoPillarA && entity != chronoPillarB)
+                {
+                    Debug.DrawLine(a, b, Color.green);
+                    entity.isFreezed = true;
+                    if (! _frozenEntities.Contains(entity))
+                        _frozenEntities.Add(entity);
+                }
+                else
+                {
+                    Debug.DrawLine(a, b, Color.yellow);
+                }
+            }
+            else
+            {
+                Debug.DrawLine(a, b, Color.red);
+            }
+        }
     }
 }
