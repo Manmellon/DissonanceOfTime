@@ -554,9 +554,6 @@ MonoBehaviour:
   isCrouch: 0
   isInWind: 0
   holdingItem: {fileID: 0}
-  wasItemKinematic: 0
-  wasItemUseGravity: 0
-  wasItemLayer: 0
 --- !u!143 &806162513
 CharacterController:
   m_ObjectHideFlags: 0
@@ -946,7 +943,7 @@ MeshCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 2147455244}
 --- !u!33 &1578211327

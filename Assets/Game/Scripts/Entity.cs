@@ -18,6 +18,7 @@ public class Entity : MonoBehaviour
 
     public bool wasItemUseGravity;
     public bool wasItemIsKinematic;
+    public int wasItemLayer;
 
     public bool isFreezed
     {

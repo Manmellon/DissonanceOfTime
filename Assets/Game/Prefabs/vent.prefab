@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 329468327554712486}
   - component: {fileID: 9107012729879565625}
   - component: {fileID: 9112505558953345554}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: vent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -166,11 +166,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 0}
+  _collider: {fileID: 0}
   _animator: {fileID: 2837249379616655031}
   _audioSource: {fileID: 329468327554712486}
   _particleSystem: {fileID: 160458489000330203}
+  isDraggable: 0
+  resetRotationAfterDrop: 0
   _isFreezed: 0
-  lastVelocity: {x: 0, y: 0, z: 0}
+  wasItemUseGravity: 0
+  wasItemIsKinematic: 0
+  wasItemLayer: 0
   indicatorMesh: {fileID: 2496687154317389036}
   material_index: 1
   enabledMaterial: {fileID: 2100000, guid: 2787966255f7d484b84a1492ef35e685, type: 2}
