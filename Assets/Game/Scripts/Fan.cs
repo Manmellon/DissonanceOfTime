@@ -21,11 +21,6 @@ public class Fan : SwitchingEntity
     protected override void Update()
     {
         base.Update();
-        //for test
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Switch();
-        }
     }
 
     protected override void TurnedOnAction()

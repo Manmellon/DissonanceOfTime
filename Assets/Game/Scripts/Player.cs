@@ -168,7 +168,7 @@ public class Player : MonoBehaviour
                 RaycastHit hit;
                 if (Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out hit, interactionRange, interactionMask))
                 {
-                    Entity entity = hit.transform.GetComponent<Entity>();
+                    Entity entity = hit.transform.GetComponentInParent<Entity>();
                     if (entity && entity.isDraggable)
                     {
                         entity.transform.SetParent(player_camera.transform);
