@@ -42,7 +42,7 @@ public class Button : SwitchingEntity
 
     private void OnTriggerExit(Collider other)
     {
-        if (isOn)
+        if (!buttonCollider.isColliding && isOn)
         {
             TurnOff();
         }
