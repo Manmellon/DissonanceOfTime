@@ -6,11 +6,13 @@ public class Entity : MonoBehaviour
 {
     [Header("Entity Components")]
     public Rigidbody _rigidbody;
+    public Collider _collider;
     public Animator _animator;
     public AudioSource _audioSource;
     public ParticleSystem _particleSystem;
 
     [Header("Entity")]
+    public bool isDraggable;
     [SerializeField]private bool _isFreezed;
 
     [HideInInspector]public Vector3 lastVelocity;

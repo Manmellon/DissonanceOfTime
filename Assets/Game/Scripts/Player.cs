@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
     [Header("Settings")]
     public float mouseSensitivity;
 
+    public float interactionRange;
+    public LayerMask interactionMask;
+
     public float walkSpeed = 4.0f;
     public float airSpeed;
     public float runMultiplier = 2.0f;
@@ -34,6 +37,11 @@ public class Player : MonoBehaviour
     public bool isCrouch;
 
     public bool isInWind;
+
+    public Entity holdingItem;
+    private bool wasItemKinematic;
+    private bool wasItemUseGravity;
+    private int wasItemLayer;
 
     public static Player singleton;
 
@@ -155,17 +163,47 @@ public class Player : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            RaycastHit[] hits;
-            //bool wasHit = Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out hit, interactionRange, interactionMask);
-            //bool wasHit = Physics.SphereCast(player_camera.transform.position, 1.0f, player_camera.transform.forward, out hit);
-            /*if (wasHit)
+            if (holdingItem == null)
             {
-                Entity entity = hit.collider.gameObject.GetComponentInParent<Entity>();
-                if (entity)
+                RaycastHit hit;
+                if (Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out hit, interactionRange, interactionMask))
                 {
-                    entity.isFreezed = !entity.isFreezed;
+                    Debug.Log("raycasted");
+                    Entity entity = hit.transform.GetComponent<Entity>();
+                    if (entity && entity.isDraggable)
+                    {
+                        entity.transform.SetParent(transform);
+
+                        holdingItem = entity;
+                        wasItemUseGravity = entity._rigidbody.useGravity;
+                        wasItemKinematic = entity._rigidbody.isKinematic;
+                        wasItemLayer = entity.gameObject.layer;
+
+                        entity._rigidbody.useGravity = false;
+                        entity._rigidbody.isKinematic = true;
+                        entity.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
+                        Physics.IgnoreCollision(controller, entity._collider);
+                    }
                 }
-            }*/
+            }
+            else
+            {
+                holdingItem._rigidbody.useGravity = wasItemUseGravity;
+                holdingItem._rigidbody.isKinematic = wasItemKinematic;
+                holdingItem.gameObject.layer = wasItemLayer;
+
+                holdingItem.transform.SetParent(null);
+
+                Physics.IgnoreCollision(controller, holdingItem._collider, false);
+
+                holdingItem = null;
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            RaycastHit[] hits;
             //must use SphereCastAll and maybe sort by distance
 
             hits = Physics.SphereCastAll(player_camera.transform.position, 1.0f, player_camera.transform.forward);
@@ -182,4 +220,6 @@ public class Player : MonoBehaviour
         }
 
     }
+
+
 }

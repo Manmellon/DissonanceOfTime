@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 8429328489822127231}
   - component: {fileID: 8429328489822127168}
   - component: {fileID: 8429328489822127230}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,6 +266,7 @@ MonoBehaviour:
   _animator: {fileID: 8429328489822127169}
   _audioSource: {fileID: 8429328489822127231}
   _particleSystem: {fileID: 0}
+  isDraggable: 0
   _isFreezed: 0
   lastVelocity: {x: 0, y: 0, z: 0}
   indicatorMesh: {fileID: 0}
