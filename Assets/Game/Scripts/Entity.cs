@@ -16,7 +16,8 @@ public class Entity : MonoBehaviour
     public bool resetRotationAfterDrop;
     [SerializeField]private bool _isFreezed;
 
-    [HideInInspector]public Vector3 lastVelocity;
+    private bool unfreezeUseGravity;
+    private bool unfreezeIsKinematic;
 
     public bool isFreezed
     {
@@ -51,6 +52,9 @@ public class Entity : MonoBehaviour
     {
         if (_rigidbody)
         {
+            unfreezeIsKinematic = _rigidbody.isKinematic;
+            unfreezeUseGravity = _rigidbody.useGravity;
+
             _rigidbody.useGravity = false;
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.angularVelocity = Vector3.zero;
@@ -70,8 +74,8 @@ public class Entity : MonoBehaviour
     {
         if (_rigidbody)
         {
-            _rigidbody.useGravity = true;
-            _rigidbody.isKinematic = false;
+            _rigidbody.useGravity = unfreezeUseGravity;
+            _rigidbody.isKinematic = unfreezeIsKinematic;
         }
 
         if (_particleSystem)
