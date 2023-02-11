@@ -100,8 +100,8 @@ public class ChronoWall : MonoBehaviour
         {
             RaycastHit hit;
 
-            Vector3 a = Vector3.Lerp(chronoPillarA.topVertex.position, chronoPillarA.bottomVertex.position, (float)i / rayCount);
-            Vector3 b = Vector3.Lerp(chronoPillarB.topVertex.position, chronoPillarB.bottomVertex.position, (float)i / rayCount);
+            Vector3 a = Vector3.Lerp(chronoPillarA.topVertex.position, chronoPillarA.bottomVertex.position, (float)i / (rayCount-1));
+            Vector3 b = Vector3.Lerp(chronoPillarB.topVertex.position, chronoPillarB.bottomVertex.position, (float)i / (rayCount-1));
 
             var ray = new Ray(a, b-a);
 
