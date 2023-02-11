@@ -51,7 +51,6 @@ public class Entity : MonoBehaviour
 
     protected virtual void FreezeTimeAction()
     {
-        Debug.Log("FreezeAction");
         if (_rigidbody)
         {
             unfreezedIsKinematic = _rigidbody.isKinematic;
@@ -75,11 +74,18 @@ public class Entity : MonoBehaviour
     protected virtual void UnFreezeTimeAction()
     {
         
-        if (_rigidbody/* && Player.singleton.holdingItem != this*/)
+        if (_rigidbody)
         {
-            Debug.Log("UnFreezeAction");
-            _rigidbody.useGravity = unfreezedUseGravity;
-            _rigidbody.isKinematic = unfreezedIsKinematic;
+            if (Player.singleton.holdingItem == this)//if holding right now, not return gravity, only set variables in player
+            {
+                Player.singleton.wasItemUseGravity = unfreezedUseGravity;
+                Player.singleton.wasItemIsKinematic = unfreezedIsKinematic;
+            }
+            else
+            {
+                _rigidbody.useGravity = unfreezedUseGravity;
+                _rigidbody.isKinematic = unfreezedIsKinematic;
+            }
         }
 
         if (_particleSystem)

@@ -39,9 +39,9 @@ public class Player : MonoBehaviour
     public bool isInWind;
 
     public Entity holdingItem;
-    [SerializeField] private bool wasItemIsKinematic;
-    [SerializeField] private bool wasItemUseGravity;
-    [SerializeField] private int wasItemLayer;
+    public bool wasItemIsKinematic;
+    public bool wasItemUseGravity;
+    public int wasItemLayer;
 
     public static Player singleton;
 
@@ -171,7 +171,6 @@ public class Player : MonoBehaviour
                     Entity entity = hit.transform.GetComponentInParent<Entity>();
                     if (entity && entity.isDraggable)
                     {
-                        Debug.Log("Pick item");
                         entity.transform.SetParent(player_camera.transform);
 
                         holdingItem = entity;
@@ -189,7 +188,6 @@ public class Player : MonoBehaviour
             }
             else
             {
-                Debug.Log("Drop item");
                 holdingItem._rigidbody.useGravity = wasItemUseGravity;
                 holdingItem._rigidbody.isKinematic = wasItemIsKinematic;
                 holdingItem.gameObject.layer = wasItemLayer;
