@@ -71,6 +71,7 @@ public class Button : SwitchingEntity
 
     private void OnTriggerStay(Collider other)
     {
+        Debug.Log("Button TriggerStay: " + other.gameObject);
         if (!isOn)
         {
             TurnOn();
