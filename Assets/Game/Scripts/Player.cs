@@ -213,7 +213,7 @@ public class Player : MonoBehaviour
             if (wasHit && hit.distance < dir.magnitude)
             {
                 Debug.Log(hit.collider.gameObject + " " + hit.distance);
-                holdingItem._rigidbody.MovePosition(curPos + dir.normalized * hit.distance);
+                holdingItem._rigidbody.MovePosition(curPos + dir.normalized * hit.distance * 0.1f);
             } 
             else
             {
