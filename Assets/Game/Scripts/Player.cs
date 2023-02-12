@@ -48,6 +48,8 @@ public class Player : MonoBehaviour
     public bool wasItemUseGravity;
     public int wasItemLayer;
 
+    public GameObject curCollidingObject;
+
     public static Player singleton;
 
     void Awake()
@@ -254,6 +256,21 @@ public class Player : MonoBehaviour
 
     }
 
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        var bc = hit.gameObject.GetComponent<ButtonCollider>();
+        if (bc != null)
+        {
+            bc.isColliding = true;
+        }
+        else if (curCollidingObject != null)
+        {
+            var was_bc = curCollidingObject.GetComponent<ButtonCollider>();
+            if (was_bc != null)
+                was_bc.isColliding = false;
+        }
+        curCollidingObject = hit.gameObject;
+    }
 
     private void FixedUpdate()
     {

@@ -263,12 +263,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 0}
+  _collider: {fileID: 0}
   _animator: {fileID: 8429328489822127169}
   _audioSource: {fileID: 8429328489822127231}
   _particleSystem: {fileID: 0}
   isDraggable: 0
+  resetRotationAfterDrop: 0
   _isFreezed: 0
-  lastVelocity: {x: 0, y: 0, z: 0}
+  unfreezedUseGravity: 0
+  unfreezedIsKinematic: 0
   indicatorMesh: {fileID: 0}
   material_index: 0
   enabledMaterial: {fileID: 0}
@@ -289,8 +292,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 0.4, z: 1.5864781}
-  m_Center: {x: 0, y: 0.17223611, z: 0}
+  m_Size: {x: 1.5, y: 0.6, z: 1.5864781}
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!1 &3816956150266655190
 GameObject:
   m_ObjectHideFlags: 0
