@@ -38,6 +38,11 @@ public class Player : MonoBehaviour
 
     public bool isInWind;
 
+    public float minHoldDistance = 1.0f;
+    public float maxHoldDistance = 4.0f;//Must be less than interaction range
+
+    public float curHoldDistance;
+
     public Entity holdingItem;
     public bool wasItemIsKinematic;
     public bool wasItemUseGravity;
@@ -183,6 +188,8 @@ public class Player : MonoBehaviour
                         entity.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
 
                         Physics.IgnoreCollision(controller, entity._collider);
+
+                        curHoldDistance = Mathf.Clamp(Vector3.Distance(player_camera.transform.position, entity.transform.position), minHoldDistance, maxHoldDistance);
                     }
                 }
             }
