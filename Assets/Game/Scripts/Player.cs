@@ -253,10 +253,30 @@ public class Player : MonoBehaviour
             }
             
         }
-
+        /*
+        Vector3 p1 = transform.position + controller.center + Vector3.up * -controller.height * 0.5F;
+        Vector3 p2 = p1 + Vector3.up * controller.height;
+        RaycastHit controllerHit;
+        if (Physics.CapsuleCast(p1, p2, controller.radius, -Vector3.up, out controllerHit, .5f))
+        {
+            Debug.Log("Colliding player" + controllerHit.collider.gameObject);
+            var bc = controllerHit.collider.gameObject.GetComponent<ButtonCollider>();
+            if (bc != null)
+            {
+                bc.isColliding = true;
+            }
+            curCollidingObject = controllerHit.collider.gameObject;
+        }
+        else if(curCollidingObject != null)
+        {
+            var was_bc = curCollidingObject.GetComponent<ButtonCollider>();
+            if (was_bc != null)
+                was_bc.isColliding = false;
+        }
+        */
     }
 
-    void OnControllerColliderHit(ControllerColliderHit hit)
+    /*void OnControllerColliderHit(ControllerColliderHit hit)
     {
         var bc = hit.gameObject.GetComponent<ButtonCollider>();
         if (bc != null)
@@ -270,7 +290,7 @@ public class Player : MonoBehaviour
                 was_bc.isColliding = false;
         }
         curCollidingObject = hit.gameObject;
-    }
+    }*/
 
     private void FixedUpdate()
     {

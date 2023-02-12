@@ -961,6 +961,7 @@ MonoBehaviour:
   wasItemIsKinematic: 0
   wasItemUseGravity: 0
   wasItemLayer: 0
+  curCollidingObject: {fileID: 0}
 --- !u!143 &806162513
 CharacterController:
   m_ObjectHideFlags: 0
@@ -976,7 +977,7 @@ CharacterController:
   m_Radius: 0.5
   m_SlopeLimit: 45
   m_StepOffset: 0.3
-  m_SkinWidth: 0.08
+  m_SkinWidth: 0.01
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!82 &806162514

@@ -22,10 +22,7 @@ public class Button : SwitchingEntity
     {
         base.Update();
 
-        if (!buttonCollider.isColliding && isOn)
-        {
-            TurnOff();
-        }
+        //Physics.BoxCast();
     }
 
     protected override void TurnedOnAction()
@@ -45,28 +42,44 @@ public class Button : SwitchingEntity
 
         _animator.SetBool("Pressed", false);
     }
-
-    private void OnTriggerStay(Collider other)
-    {
-        if (buttonCollider.isColliding)
+    /*
+        private void OnTriggerStay(Collider other)
         {
-            if (!isOn)
+            if (buttonCollider.isColliding)
             {
-                TurnOn();
+                if (!isOn)
+                {
+                    TurnOn();
+                }
+            }
+            else
+            {
+                if (isOn)
+                {
+                    TurnOff();
+                }
             }
         }
-        else
+
+        private void OnTriggerExit(Collider other)
         {
-            if (isOn)
+            if (!buttonCollider.isColliding && isOn)
             {
                 TurnOff();
             }
+        }*/
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (!isOn)
+        {
+            TurnOn();
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!buttonCollider.isColliding && isOn)
+        if (isOn)
         {
             TurnOff();
         }
