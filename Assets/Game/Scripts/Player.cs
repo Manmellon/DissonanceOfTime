@@ -205,25 +205,21 @@ public class Player : MonoBehaviour
 
         if (holdingItem != null)
         {
-            Vector3 dir = (player_camera.transform.position + player_camera.transform.forward * 4) - holdingItem.transform.position;
+            Vector3 curPos = holdingItem._rigidbody.position;
+            Vector3 newPos = (player_camera.transform.position + player_camera.transform.forward * 4);
+            Vector3 dir = newPos - curPos;
             RaycastHit hit;
             bool wasHit = holdingItem._rigidbody.SweepTest(dir, out hit);
-            if (wasHit)
+            if (wasHit && hit.distance < dir.magnitude)
+            {
                 Debug.Log(hit.collider.gameObject + " " + hit.distance);
-            if (!wasHit || wasHit && hit.distance > 0.1f)
+                holdingItem._rigidbody.MovePosition(curPos + dir.normalized * hit.distance);
+            } 
+            else
             {
-                holdingItem._rigidbody.MovePosition(player_camera.transform.position + player_camera.transform.forward * 4);
+                //Debug.Log(hit.distance + " " + dir.magnitude);
+                holdingItem._rigidbody.MovePosition(newPos);
             }
-            
-
-            /*Vector3 oldPos = holdingItem.transform.position;
-
-            holdingItem._rigidbody.MovePosition(player_camera.transform.position + player_camera.transform.forward * 4);
-            if (holdingItem._rigidbody.SweepTest(dir.normalized, out hit))
-            {
-                holdingItem._rigidbody.MovePosition(oldPos);
-            }
-            */
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -246,5 +242,10 @@ public class Player : MonoBehaviour
 
     }
 
+
+    private void FixedUpdate()
+    {
+        
+    }
 
 }
