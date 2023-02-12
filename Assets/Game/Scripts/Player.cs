@@ -216,7 +216,7 @@ public class Player : MonoBehaviour
 
             Vector3 curPos = holdingItem._rigidbody.position;
 
-            Vector3 newPos = (player_camera.transform.position + player_camera.transform.forward * 4);
+            Vector3 newPos = (player_camera.transform.position + player_camera.transform.forward * curHoldDistance);
             Vector3 dir = newPos - curPos;
             RaycastHit hit;
             bool wasHit = holdingItem._rigidbody.SweepTest(dir, out hit);
