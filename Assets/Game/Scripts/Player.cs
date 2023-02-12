@@ -222,13 +222,13 @@ public class Player : MonoBehaviour
             bool wasHit = holdingItem._rigidbody.SweepTest(dir, out hit);
             if (wasHit && hit.distance < dir.magnitude)
             {
-                Debug.Log(hit.collider.gameObject + " " + hit.distance);
+                //Debug.Log(hit.collider.gameObject + " " + hit.distance);
                 //holdingItem._rigidbody.MovePosition(curPos + dir.normalized * (hit.distance - 0.01f));
                 holdingItem._rigidbody.position = curPos + dir.normalized * (hit.distance);
             } 
             else
             {
-                Debug.Log(hit.distance + " " + dir.magnitude);
+                //Debug.Log(hit.distance + " " + dir.magnitude);
                 //holdingItem._rigidbody.MovePosition(newPos);
                 holdingItem._rigidbody.position = newPos;
             }
