@@ -18,6 +18,15 @@ public class Button : SwitchingEntity
         Physics.IgnoreCollision(pressingCollider, baseCollider);
     }
 
+    protected override void Update()
+    {
+        base.Update();
+
+        if (!buttonCollider.isColliding && isOn)
+        {
+            TurnOff();
+        }
+    }
 
     protected override void TurnedOnAction()
     {
