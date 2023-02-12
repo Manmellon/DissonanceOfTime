@@ -212,7 +212,10 @@ public class Player : MonoBehaviour
 
         if (holdingItem != null)
         {
+            holdingItem._rigidbody.position = player_camera.transform.position + player_camera.transform.forward * minHoldDistance;
+
             Vector3 curPos = holdingItem._rigidbody.position;
+
             Vector3 newPos = (player_camera.transform.position + player_camera.transform.forward * 4);
             Vector3 dir = newPos - curPos;
             RaycastHit hit;
@@ -220,12 +223,14 @@ public class Player : MonoBehaviour
             if (wasHit && hit.distance < dir.magnitude)
             {
                 Debug.Log(hit.collider.gameObject + " " + hit.distance);
-                holdingItem._rigidbody.MovePosition(curPos + dir.normalized * (hit.distance - 0.01f));
+                //holdingItem._rigidbody.MovePosition(curPos + dir.normalized * (hit.distance - 0.01f));
+                holdingItem._rigidbody.position = curPos + dir.normalized * (hit.distance);
             } 
             else
             {
                 Debug.Log(hit.distance + " " + dir.magnitude);
-                holdingItem._rigidbody.MovePosition(newPos);
+                //holdingItem._rigidbody.MovePosition(newPos);
+                holdingItem._rigidbody.position = newPos;
             }
         }
 
