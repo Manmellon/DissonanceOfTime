@@ -171,7 +171,7 @@ public class Player : MonoBehaviour
                     Entity entity = hit.transform.GetComponentInParent<Entity>();
                     if (entity && entity.isDraggable)
                     {
-                        entity.transform.SetParent(player_camera.transform);
+                        //entity.transform.SetParent(player_camera.transform);
 
                         holdingItem = entity;
                         wasItemUseGravity = entity._rigidbody.useGravity;
@@ -195,12 +195,35 @@ public class Player : MonoBehaviour
                 if (holdingItem.resetRotationAfterDrop)
                     holdingItem.transform.rotation = Quaternion.identity;
 
-                holdingItem.transform.SetParent(null);
+                //holdingItem.transform.SetParent(null);
 
                 Physics.IgnoreCollision(controller, holdingItem._collider, false);
 
                 holdingItem = null;
             }
+        }
+
+        if (holdingItem != null)
+        {
+            Vector3 dir = (player_camera.transform.position + player_camera.transform.forward * 4) - holdingItem.transform.position;
+            RaycastHit hit;
+            bool wasHit = holdingItem._rigidbody.SweepTest(dir, out hit);
+            if (wasHit)
+                Debug.Log(hit.collider.gameObject + " " + hit.distance);
+            if (!wasHit || wasHit && hit.distance > 0.1f)
+            {
+                holdingItem._rigidbody.MovePosition(player_camera.transform.position + player_camera.transform.forward * 4);
+            }
+            
+
+            /*Vector3 oldPos = holdingItem.transform.position;
+
+            holdingItem._rigidbody.MovePosition(player_camera.transform.position + player_camera.transform.forward * 4);
+            if (holdingItem._rigidbody.SweepTest(dir.normalized, out hit))
+            {
+                holdingItem._rigidbody.MovePosition(oldPos);
+            }
+            */
         }
 
         if (Input.GetMouseButtonDown(1))
