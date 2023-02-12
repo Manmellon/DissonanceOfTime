@@ -71,7 +71,9 @@ public class Button : SwitchingEntity
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("Button TriggerStay: " + other.gameObject);
+        Entity entity = other.GetComponent<Entity>();
+        if (entity != null && entity.isFreezed) return;
+
         if (!isOn)
         {
             TurnOn();
@@ -80,6 +82,9 @@ public class Button : SwitchingEntity
 
     private void OnTriggerExit(Collider other)
     {
+        Entity entity = other.GetComponent<Entity>();
+        if (entity != null && entity.isFreezed) return;
+
         if (isOn)
         {
             TurnOff();
