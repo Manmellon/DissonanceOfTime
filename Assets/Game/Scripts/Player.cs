@@ -235,7 +235,7 @@ public class Player : MonoBehaviour
                 holdingItem._rigidbody.position = newPos;
             }
 
-            if (holdingItem == curTarget)
+            if (curTarget)
             {
                 if (curTarget._outline)
                     curTarget._outline.enabled = false;
