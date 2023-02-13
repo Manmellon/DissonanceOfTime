@@ -252,18 +252,21 @@ public class Player : MonoBehaviour
             if (Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out interactionHit, interactionRange, interactionMask))
             {
                 Entity entity = interactionHit.collider.GetComponentInParent<Entity>();
+
+                if (curTarget && curTarget != entity)
+                {
+                    if (curTarget._outline)
+                        curTarget._outline.enabled = false;
+                    curTarget = null;
+                }
+
                 if (entity != null)
                 {
                     if (entity._outline)
                         entity._outline.enabled = true;
                     curTarget = entity;
                 }
-                else if (curTarget)
-                {
-                    if (curTarget._outline)
-                        curTarget._outline.enabled = false;
-                    curTarget = null;
-                }
+
             }
             else if (curTarget)
             {
