@@ -48,7 +48,7 @@ public class Player : MonoBehaviour
     public bool wasItemUseGravity;
     public int wasItemLayer;
 
-    public GameObject curCollidingObject;
+    public Entity curTarget;
 
     public static Player singleton;
 
@@ -234,6 +234,43 @@ public class Player : MonoBehaviour
                 //holdingItem._rigidbody.MovePosition(newPos);
                 holdingItem._rigidbody.position = newPos;
             }
+
+            if (holdingItem == curTarget)
+            {
+                if (curTarget._outline)
+                    curTarget._outline.enabled = false;
+                curTarget = null;
+            }
+
+            //If holding Pillar, need raycast to check if target other pillar here
+
+        }
+        else //if not holding anything
+        {
+
+            RaycastHit interactionHit;
+            if (Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out interactionHit, interactionRange, interactionMask))
+            {
+                Entity entity = interactionHit.collider.GetComponentInParent<Entity>();
+                if (entity != null)
+                {
+                    if (entity._outline)
+                        entity._outline.enabled = true;
+                    curTarget = entity;
+                }
+                else if (curTarget)
+                {
+                    if (curTarget._outline)
+                        curTarget._outline.enabled = false;
+                    curTarget = null;
+                }
+            }
+            else if (curTarget)
+            {
+                if (curTarget._outline)
+                    curTarget._outline.enabled = false;
+                curTarget = null;
+            }
         }
 
         if (Input.GetMouseButtonDown(1))
@@ -253,48 +290,5 @@ public class Player : MonoBehaviour
             }
             
         }
-        /*
-        Vector3 p1 = transform.position + controller.center + Vector3.up * -controller.height * 0.5F;
-        Vector3 p2 = p1 + Vector3.up * controller.height;
-        RaycastHit controllerHit;
-        if (Physics.CapsuleCast(p1, p2, controller.radius, -Vector3.up, out controllerHit, .5f))
-        {
-            Debug.Log("Colliding player" + controllerHit.collider.gameObject);
-            var bc = controllerHit.collider.gameObject.GetComponent<ButtonCollider>();
-            if (bc != null)
-            {
-                bc.isColliding = true;
-            }
-            curCollidingObject = controllerHit.collider.gameObject;
-        }
-        else if(curCollidingObject != null)
-        {
-            var was_bc = curCollidingObject.GetComponent<ButtonCollider>();
-            if (was_bc != null)
-                was_bc.isColliding = false;
-        }
-        */
     }
-
-    /*void OnControllerColliderHit(ControllerColliderHit hit)
-    {
-        var bc = hit.gameObject.GetComponent<ButtonCollider>();
-        if (bc != null)
-        {
-            bc.isColliding = true;
-        }
-        else if (curCollidingObject != null)
-        {
-            var was_bc = curCollidingObject.GetComponent<ButtonCollider>();
-            if (was_bc != null)
-                was_bc.isColliding = false;
-        }
-        curCollidingObject = hit.gameObject;
-    }*/
-
-    private void FixedUpdate()
-    {
-        
-    }
-
 }

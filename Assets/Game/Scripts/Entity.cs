@@ -10,6 +10,7 @@ public class Entity : MonoBehaviour
     public Animator _animator;
     public AudioSource _audioSource;
     public ParticleSystem _particleSystem;
+    public Outline _outline;
 
     [Header("Entity")]
     public bool isDraggable;

@@ -1647,7 +1647,7 @@ MonoBehaviour:
   wasItemIsKinematic: 0
   wasItemUseGravity: 0
   wasItemLayer: 0
-  curCollidingObject: {fileID: 0}
+  curTarget: {fileID: 0}
 --- !u!143 &806162513
 CharacterController:
   m_ObjectHideFlags: 0
@@ -3884,7 +3884,7 @@ GameObject:
   - component: {fileID: 543450651818250507}
   - component: {fileID: 3469287837748944558}
   - component: {fileID: 1711813854826801764}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}

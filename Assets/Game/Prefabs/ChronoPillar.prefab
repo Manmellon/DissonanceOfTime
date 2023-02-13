@@ -139,6 +139,7 @@ MonoBehaviour:
   _animator: {fileID: 0}
   _audioSource: {fileID: 0}
   _particleSystem: {fileID: 0}
+  _outline: {fileID: 57239183}
   isDraggable: 1
   resetRotationAfterDrop: 1
   _isFreezed: 0
@@ -163,8 +164,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 3
-  outlineColor: {r: 0, g: 0, b: 0, a: 1}
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
   outlineWidth: 10
   precomputeOutline: 1
   bakeKeys:
@@ -1426,8 +1427,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3313400521874469916}
   - component: {fileID: 3313400521873667132}
-  - component: {fileID: 3313400521868199580}
   - component: {fileID: 3313400521872570108}
+  - component: {fileID: 3313400521868199580}
   m_Layer: 6
   m_Name: Model
   m_TagString: Untagged
@@ -1458,20 +1459,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3313400521874499644}
   m_Mesh: {fileID: 4300000, guid: f2e6e8c087c986d41bed8a9645d0b993, type: 3}
---- !u!64 &3313400521868199580
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3313400521874499644}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 4
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300002, guid: f2e6e8c087c986d41bed8a9645d0b993, type: 3}
 --- !u!23 &3313400521872570108
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1514,6 +1501,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &3313400521868199580
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3313400521874499644}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4300002, guid: f2e6e8c087c986d41bed8a9645d0b993, type: 3}
 --- !u!1 &4490993164957985104
 GameObject:
   m_ObjectHideFlags: 0
