@@ -21,6 +21,9 @@ public class Entity : MonoBehaviour
     public bool unfreezedIsKinematic;
     //public int wasItemLayer;
 
+    public Vector3 unfreezedVelocity;
+    public Vector3 unfreezedAngularVelocity;
+
     public bool isFreezed
     {
         get { return _isFreezed; }
@@ -57,10 +60,14 @@ public class Entity : MonoBehaviour
             unfreezedIsKinematic = _rigidbody.isKinematic;
             unfreezedUseGravity = _rigidbody.useGravity;
 
+            unfreezedVelocity = _rigidbody.velocity;
+            unfreezedAngularVelocity = _rigidbody.angularVelocity;
+
+            _rigidbody.isKinematic = true;
             _rigidbody.useGravity = false;
+
             _rigidbody.velocity = Vector3.zero;
             _rigidbody.angularVelocity = Vector3.zero;
-            _rigidbody.isKinematic = true;
         }
 
         if (_particleSystem)
@@ -86,6 +93,9 @@ public class Entity : MonoBehaviour
             {
                 _rigidbody.useGravity = unfreezedUseGravity;
                 _rigidbody.isKinematic = unfreezedIsKinematic;
+
+                _rigidbody.velocity = unfreezedVelocity;
+                _rigidbody.angularVelocity = unfreezedAngularVelocity;
             }
         }
 
