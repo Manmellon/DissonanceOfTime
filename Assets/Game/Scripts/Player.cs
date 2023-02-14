@@ -23,7 +23,7 @@ public class Player : MonoBehaviour
     public float runMultiplier = 2.0f;
     public float crouchMultiplier = 0.5f;
 
-    [SerializeField]private Vector3 fallingVelocity;
+    public Vector3 fallingVelocity;
     //public float gravity = -9.8f;
     public float jumpHeight;
 
@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) && !isInWind;
 
         //????
         //We do it, so gravity not will be accumulate too much when standing on ground

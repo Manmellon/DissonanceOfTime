@@ -11,6 +11,8 @@ public class Fan : SwitchingEntity
     public float fanPower;
     public float maxWindDistance;
 
+    public List<GameObject> objectsInside = new List<GameObject>();
+
     // Start is called before the first frame update
     protected override void Start()
     {
@@ -45,7 +47,26 @@ public class Fan : SwitchingEntity
 
     private void OnTriggerStay(Collider other)
     {
-        if (!isOn || isFreezed) return;
+        if (!isOn || isFreezed)
+        {
+            foreach (var go in objectsInside)
+            {
+                if (other.CompareTag("Player"))
+                {
+                    Player player = other.GetComponentInParent<Player>();
+                    if (player == null) continue;
+
+                    player.isInWind = false;
+                }
+            }
+
+            objectsInside.Clear();
+
+            return;
+        }
+
+        if (!objectsInside.Contains(other.gameObject))
+            objectsInside.Add(other.gameObject);
 
         float x = Mathf.Clamp(Vector3.Distance(transform.position, other.transform.position), 0, maxWindDistance);
 
@@ -63,7 +84,10 @@ public class Fan : SwitchingEntity
             Player player = other.GetComponentInParent<Player>();
             if (player == null) return;
 
-            player.controller.Move(powerVector);
+            //player.controller.Move(powerVector);
+            player.fallingVelocity = powerVector;
+
+            player.isInWind = true;
         }
         else
         {
@@ -78,6 +102,17 @@ public class Fan : SwitchingEntity
 
             entity._rigidbody.AddForce(powerVector - acceleration, ForceMode.Acceleration);*/
             entity._rigidbody.velocity = powerVector;
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Player player = other.GetComponentInParent<Player>();
+            if (player == null) return;
+
+            player.isInWind = false;
         }
     }
 }
