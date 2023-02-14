@@ -102,7 +102,6 @@ public class Player : MonoBehaviour
 
         Vector3 move = transform.right * horizontalInput + transform.forward * verticalInput;
 
-
         float resultSpeed = isGrounded? walkSpeed : airSpeed;
 
         if (horizontalInput != 0 || verticalInput != 0)
@@ -144,25 +143,6 @@ public class Player : MonoBehaviour
         {
             _audioSource.clip = null;
         }
-
-        /*if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            isCrouch = !isCrouch;
-
-            if (isCrouch)
-            {
-                controller.height -= 1f;
-                //groundCheck.localPosition -= new Vector3(0, 0.25f, 0);
-                //transform.position -= new Vector3(0, 0.25f, 0);
-
-            }
-            else
-            {
-                controller.height += 1f;
-                //groundCheck.localPosition += new Vector3(0, 0.25f, 0);
-                //transform.position += new Vector3(0, 0.25f, 0);
-            }
-        }*/
 
         controller.Move(move * resultSpeed * Time.deltaTime);
 
