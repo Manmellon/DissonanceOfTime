@@ -230,6 +230,7 @@ public class Player : MonoBehaviour
             Vector3 dir = newPos - curPos;
             RaycastHit hit;
             bool wasHit = holdingItem._rigidbody.SweepTest(dir, out hit);
+            Debug.Log(wasHit + " " + hit.collider + " " + hit.distance + " < " + dir.magnitude);
             if (wasHit && hit.distance < dir.magnitude)
             {
                 //Debug.Log(hit.collider.gameObject + " " + hit.distance);

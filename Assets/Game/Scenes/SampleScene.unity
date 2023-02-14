@@ -1640,9 +1640,11 @@ MonoBehaviour:
   isGrounded: 0
   isCrouch: 0
   isInWind: 0
-  minHoldDistance: 1
+  minHoldDistance: -1
   maxHoldDistance: 4
   curHoldDistance: 0
+  startHoldItemRotation: {x: 0, y: 0, z: 0, w: 0}
+  startHoldPlayerRotation: {x: 0, y: 0, z: 0, w: 0}
   holdingItem: {fileID: 0}
   wasItemIsKinematic: 0
   wasItemUseGravity: 0
@@ -2478,7 +2480,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24244
+  m_Name: pb_Mesh24362
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3629,7 +3631,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh24406
+  m_Name: pb_Mesh24524
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
