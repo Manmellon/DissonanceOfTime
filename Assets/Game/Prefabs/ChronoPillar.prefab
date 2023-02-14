@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1731978927861453634}
   - component: {fileID: 5425101661434758118}
   - component: {fileID: 7613028618359212420}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Quad (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 8395955212223966166}
-  _collider: {fileID: 3313400521868199580}
+  _collider: {fileID: 1165307742313190871}
   _animator: {fileID: 0}
   _audioSource: {fileID: 0}
   _particleSystem: {fileID: 0}
@@ -1262,7 +1262,7 @@ GameObject:
   - component: {fileID: 2198059541985448473}
   - component: {fileID: 9171351928192288062}
   - component: {fileID: 861823721889855718}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Quad (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1345,7 +1345,7 @@ GameObject:
   - component: {fileID: 2204480099799129162}
   - component: {fileID: 2938986130177744477}
   - component: {fileID: 4659801361309329269}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Quad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1586,7 +1586,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7297154820132887739}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: Indicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}

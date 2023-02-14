@@ -286,6 +286,7 @@ public class Player : MonoBehaviour
         }
 
         if (Input.GetMouseButtonDown(1))
+        //if (Input.GetMouseButton(1))
         {
             RaycastHit[] hits;
             //must use SphereCastAll and maybe sort by distance
@@ -298,6 +299,7 @@ public class Player : MonoBehaviour
                 if (entity)
                 {
                     entity.isFreezed = !entity.isFreezed;
+                    //entity.isFreezed = true;
                 }
             }
             
