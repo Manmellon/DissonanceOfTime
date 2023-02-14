@@ -42,6 +42,8 @@ public class Player : MonoBehaviour
     public float maxHoldDistance = 4.0f;//Must be less than interaction range
 
     public float curHoldDistance;
+    public Quaternion startHoldItemRotation;
+    public Quaternion startHoldPlayerRotation;
 
     public Entity holdingItem;
     public bool wasItemIsKinematic;
@@ -192,6 +194,8 @@ public class Player : MonoBehaviour
                         Physics.IgnoreCollision(controller, entity._collider);
 
                         curHoldDistance = Mathf.Clamp(Vector3.Distance(player_camera.transform.position, entity.transform.position), minHoldDistance, maxHoldDistance);
+                        startHoldItemRotation = entity.transform.rotation;
+                        startHoldPlayerRotation = player_camera.transform.rotation;
                     }
                 }
             }
@@ -214,6 +218,10 @@ public class Player : MonoBehaviour
 
         if (holdingItem != null)
         {
+            //holdingItem.transform.Rotate(Vector3.up * mouseX);
+            //holdingItem.transform.rotation = player_camera.transform.rotation;
+            holdingItem.transform.rotation = (player_camera.transform.rotation * Quaternion.Inverse(startHoldPlayerRotation)) * startHoldItemRotation;
+
             holdingItem._rigidbody.position = player_camera.transform.position + player_camera.transform.forward * minHoldDistance;
 
             Vector3 curPos = holdingItem._rigidbody.position;
