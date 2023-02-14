@@ -45,6 +45,7 @@ public class Fan : SwitchingEntity
             _animator.SetBool("RotateRight", false);
     }
 
+    
     private void OnTriggerStay(Collider other)
     {
         if (!isOn || isFreezed)
@@ -85,7 +86,8 @@ public class Fan : SwitchingEntity
             if (player == null) return;
 
             //player.controller.Move(powerVector);
-            player.fallingVelocity = powerVector;
+            //player.fallingVelocity = powerVector;
+            player.fallingVelocity = Vector3.up * 5.0f;
 
             player.isInWind = true;
         }
@@ -97,11 +99,14 @@ public class Fan : SwitchingEntity
             entity._rigidbody.transform.rotation = Quaternion.identity;
             entity._rigidbody.angularVelocity = Vector3.zero;
 
-            /*var acceleration = (entity._rigidbody.velocity - entity.lastVelocity) / Time.fixedDeltaTime;
-            entity.lastVelocity = entity._rigidbody.velocity;
+            //var acceleration = (entity._rigidbody.velocity - entity.lastVelocity) / Time.fixedDeltaTime;
+            //entity.lastVelocity = entity._rigidbody.velocity;
 
-            entity._rigidbody.AddForce(powerVector - acceleration, ForceMode.Acceleration);*/
-            entity._rigidbody.velocity = powerVector;
+            //entity._rigidbody.AddForce(Vector3.up * 0.1f, ForceMode.Impulse);
+            //entity._rigidbody.velocity = powerVector;
+            entity._rigidbody.AddForce(Vector3.up * Physics.gravity.magnitude, ForceMode.Acceleration);
+
+            entity._rigidbody.velocity = Vector3.up * 5.0f;
         }
     }
 
