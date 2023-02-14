@@ -145,6 +145,8 @@ MonoBehaviour:
   _isFreezed: 0
   unfreezedUseGravity: 0
   unfreezedIsKinematic: 0
+  unfreezedVelocity: {x: 0, y: 0, z: 0}
+  unfreezedAngularVelocity: {x: 0, y: 0, z: 0}
   indicatorMesh: {fileID: 0}
   material_index: 0
   enabledMaterial: {fileID: 0}
@@ -152,6 +154,8 @@ MonoBehaviour:
   _isOn: 0
   topVertex: {fileID: 4884866678339457015}
   bottomVertex: {fileID: 2997372757094716183}
+  chronoWallPrefab: {fileID: 7571100704147033216, guid: b9fb3410da070bf4c80edf938d082bda, type: 3}
+  connections: []
 --- !u!114 &57239183
 MonoBehaviour:
   m_ObjectHideFlags: 0

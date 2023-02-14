@@ -159,104 +159,8 @@ public class Player : MonoBehaviour
 
         transform.Rotate(Vector3.up * mouseX);
 
-        if (Input.GetMouseButtonDown(0))
+        if (holdingItem == null)
         {
-            if (holdingItem == null)
-            {
-                RaycastHit hit;
-                if (Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out hit, interactionRange, interactionMask))
-                {
-                    Entity entity = hit.transform.GetComponentInParent<Entity>();
-                    if (entity && entity.isDraggable)
-                    {
-                        //entity.transform.SetParent(player_camera.transform);
-
-                        holdingItem = entity;
-                        wasItemUseGravity = entity._rigidbody.useGravity;
-                        wasItemIsKinematic = entity._rigidbody.isKinematic;
-                        wasItemLayer = entity.gameObject.layer;
-
-                        entity._rigidbody.useGravity = false;
-                        entity._rigidbody.isKinematic = true;
-                        entity.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-
-                        Physics.IgnoreCollision(controller, entity._collider);
-
-                        curHoldDistance = Mathf.Clamp(Vector3.Distance(player_camera.transform.position, entity.transform.position), minHoldDistance, maxHoldDistance);
-                        startHoldItemRotation = entity.transform.rotation;
-                        startHoldPlayerRotation = player_camera.transform.rotation;
-                    }
-                }
-            }
-            else if (holdingItem is ChronoPillar pillar)
-            {
-                RaycastHit pillarHit;
-                if (Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out pillarHit, 1000.0f, interactionMask))
-                {
-                    Entity entity = pillarHit.transform.GetComponentInParent<Entity>();
-                    if (entity && entity is ChronoPillar otherPillar)
-                    {
-                        entity._outline.enabled = true;
-
-                        curTarget = entity;
-                    }
-                    else
-                    {
-                        Drop();
-                    }
-                }
-                else
-                {
-                    Drop();
-                }
-            }
-            else
-            {
-                Drop();
-            }
-        }
-
-        if (holdingItem != null)
-        {
-            //holdingItem.transform.Rotate(Vector3.up * mouseX);
-            //holdingItem.transform.rotation = player_camera.transform.rotation;
-            holdingItem.transform.rotation = (player_camera.transform.rotation * Quaternion.Inverse(startHoldPlayerRotation)) * startHoldItemRotation;
-
-            holdingItem._rigidbody.position = player_camera.transform.position + player_camera.transform.forward * minHoldDistance;
-
-            Vector3 curPos = holdingItem._rigidbody.position;
-
-            Vector3 newPos = (player_camera.transform.position + player_camera.transform.forward * curHoldDistance);
-            Vector3 dir = newPos - curPos;
-            RaycastHit hit;
-            bool wasHit = holdingItem._rigidbody.SweepTest(dir, out hit);
-            Debug.Log(wasHit + " " + hit.collider + " " + hit.distance + " < " + dir.magnitude);
-            if (wasHit && hit.distance < dir.magnitude)
-            {
-                //Debug.Log(hit.collider.gameObject + " " + hit.distance);
-                //holdingItem._rigidbody.MovePosition(curPos + dir.normalized * (hit.distance - 0.01f));
-                holdingItem._rigidbody.position = curPos + dir.normalized * (hit.distance);
-            } 
-            else
-            {
-                //Debug.Log(hit.distance + " " + dir.magnitude);
-                //holdingItem._rigidbody.MovePosition(newPos);
-                holdingItem._rigidbody.position = newPos;
-            }
-
-            if (curTarget)
-            {
-                if (curTarget._outline)
-                    curTarget._outline.enabled = false;
-                curTarget = null;
-            }
-
-            //If holding Pillar, need raycast to check if target other pillar here
-
-        }
-        else //if not holding anything
-        {
-
             RaycastHit interactionHit;
             if (Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out interactionHit, interactionRange, interactionMask))
             {
@@ -283,6 +187,116 @@ public class Player : MonoBehaviour
                     curTarget._outline.enabled = false;
                 curTarget = null;
             }
+
+            if (Input.GetMouseButtonDown(0))
+            {
+                RaycastHit hit;
+                if (Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out hit, interactionRange, interactionMask))
+                {
+                    Entity entity = hit.transform.GetComponentInParent<Entity>();
+                    if (entity && entity.isDraggable)
+                    {
+                        //entity.transform.SetParent(player_camera.transform);
+
+                        holdingItem = entity;
+                        wasItemUseGravity = entity._rigidbody.useGravity;
+                        wasItemIsKinematic = entity._rigidbody.isKinematic;
+                        wasItemLayer = entity.gameObject.layer;
+
+                        entity._rigidbody.useGravity = false;
+                        entity._rigidbody.isKinematic = true;
+                        entity.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
+                        Physics.IgnoreCollision(controller, entity._collider);
+
+                        curHoldDistance = Mathf.Clamp(Vector3.Distance(player_camera.transform.position, entity.transform.position), minHoldDistance, maxHoldDistance);
+                        startHoldItemRotation = entity.transform.rotation;
+                        startHoldPlayerRotation = player_camera.transform.rotation;
+                    }
+                }
+            }
+        }
+        else //if hold some item
+        {
+            //holdingItem.transform.Rotate(Vector3.up * mouseX);
+            //holdingItem.transform.rotation = player_camera.transform.rotation;
+            holdingItem.transform.rotation = (player_camera.transform.rotation * Quaternion.Inverse(startHoldPlayerRotation)) * startHoldItemRotation;
+
+            holdingItem._rigidbody.position = player_camera.transform.position + player_camera.transform.forward * minHoldDistance;
+
+            Vector3 curPos = holdingItem._rigidbody.position;
+
+            Vector3 newPos = (player_camera.transform.position + player_camera.transform.forward * curHoldDistance);
+            Vector3 dir = newPos - curPos;
+            RaycastHit hit;
+            bool wasHit = holdingItem._rigidbody.SweepTest(dir, out hit);
+            Debug.Log(wasHit + " " + hit.collider + " " + hit.distance + " < " + dir.magnitude);
+            if (wasHit && hit.distance < dir.magnitude)
+            {
+                //Debug.Log(hit.collider.gameObject + " " + hit.distance);
+                //holdingItem._rigidbody.MovePosition(curPos + dir.normalized * (hit.distance - 0.01f));
+                holdingItem._rigidbody.position = curPos + dir.normalized * (hit.distance);
+            }
+            else
+            {
+                //Debug.Log(hit.distance + " " + dir.magnitude);
+                //holdingItem._rigidbody.MovePosition(newPos);
+                holdingItem._rigidbody.position = newPos;
+            }
+
+            //If holding Pillar, need raycast to check if target other pillar here
+
+            RaycastHit pillarHit;
+
+            if (holdingItem is ChronoPillar pillar)
+            {
+                if (Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out pillarHit, 1000.0f, interactionMask))
+                {
+                    Entity entity = pillarHit.transform.GetComponentInParent<Entity>();
+                    if (entity && entity is ChronoPillar otherPillar)
+                    {
+                        entity._outline.enabled = true;
+
+                        curTarget = entity;
+                    }
+                    else if (curTarget)
+                    {
+                        if (curTarget._outline)
+                            curTarget._outline.enabled = false;
+                        curTarget = null;
+                    }
+                }
+                else if (curTarget)
+                {
+                    if (curTarget._outline)
+                        curTarget._outline.enabled = false;
+                    curTarget = null;
+                }
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (curTarget && curTarget is ChronoPillar otherPillar)
+                        pillar.AddConnection(otherPillar);
+                    else
+                        Drop();
+                }
+            }
+            else
+            {
+                if (curTarget)
+                {
+                    if (curTarget._outline)
+                        curTarget._outline.enabled = false;
+                    curTarget = null;
+                }
+
+                if (Input.GetMouseButtonDown(0))
+                {
+                    Drop();
+                }
+            }
+
+            
         }
 
         foreach (var e in freezedByGun)

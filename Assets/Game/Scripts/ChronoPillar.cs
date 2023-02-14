@@ -8,6 +8,10 @@ public class ChronoPillar : SwitchingEntity
     public Transform topVertex;
     public Transform bottomVertex;
 
+    public ChronoWall chronoWallPrefab;
+
+    public List<ChronoPillar> connections = new List<ChronoPillar>();
+
     protected override void Start()
     {
         base.Start();
@@ -22,5 +26,17 @@ public class ChronoPillar : SwitchingEntity
         {
             Switch();
         }
+    }
+
+    public void AddConnection(ChronoPillar otherPillar)
+    {
+        if ( !connections.Contains(otherPillar) )
+            connections.Add(otherPillar);
+    }
+
+    public void RemoveConnection(ChronoPillar otherPillar)
+    {
+        if (connections.Contains(otherPillar))
+            connections.Remove(otherPillar);
     }
 }
