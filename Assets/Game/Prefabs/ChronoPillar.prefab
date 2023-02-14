@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 57239183}
   - component: {fileID: 8395955212223966166}
   - component: {fileID: 1165307742313190871}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ChronoPillar
   m_TagString: Untagged
   m_Icon: {fileID: 0}

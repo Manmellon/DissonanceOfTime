@@ -52,6 +52,10 @@ public class Player : MonoBehaviour
 
     public Entity curTarget;
 
+    public List<Entity> freezedByGun = new List<Entity>();
+
+    public ParticleSystem gunParticles;
+
     public static Player singleton;
 
     void Awake()
@@ -285,9 +289,11 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetMouseButtonDown(1))
-        //if (Input.GetMouseButton(1))
+        //if (Input.GetMouseButtonDown(1))
+        if (Input.GetMouseButton(1))
         {
+            gunParticles.Play();
+
             RaycastHit[] hits;
             //must use SphereCastAll and maybe sort by distance
 
@@ -298,11 +304,23 @@ public class Player : MonoBehaviour
                 Entity entity = hit.collider.gameObject.GetComponentInParent<Entity>();
                 if (entity)
                 {
-                    entity.isFreezed = !entity.isFreezed;
-                    //entity.isFreezed = true;
+                    //entity.isFreezed = !entity.isFreezed;
+                    entity.isFreezed = true;
+
+                    if (!freezedByGun.Contains(entity))
+                        freezedByGun.Add(entity);
                 }
             }
             
         }
+        else
+        {
+            gunParticles.Stop();
+            foreach (var e in freezedByGun)
+                e.isFreezed = false;
+            freezedByGun.Clear();
+        }
+
+        Debug.Log(gunParticles.isPlaying);
     }
 }
