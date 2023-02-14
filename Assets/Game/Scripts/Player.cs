@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     public float interactionRange;
     public LayerMask interactionMask;
 
+    public float mass = 1.0f;
+
     public float walkSpeed = 4.0f;
     public float airSpeed;
     public float runMultiplier = 2.0f;
@@ -56,6 +58,8 @@ public class Player : MonoBehaviour
 
     //public ParticleSystem gunParticles;
     public GameObject beam;
+
+    private Vector3 impact;
 
     public static Player singleton;
 
@@ -204,20 +208,31 @@ public class Player : MonoBehaviour
                     }
                 }
             }
+            else if (holdingItem is ChronoPillar pillar)
+            {
+                RaycastHit pillarHit;
+                if (Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out pillarHit, 1000.0f, interactionMask))
+                {
+                    Entity entity = pillarHit.transform.GetComponentInParent<Entity>();
+                    if (entity && entity is ChronoPillar otherPillar)
+                    {
+                        entity._outline.enabled = true;
+
+                        curTarget = entity;
+                    }
+                    else
+                    {
+                        Drop();
+                    }
+                }
+                else
+                {
+                    Drop();
+                }
+            }
             else
             {
-                holdingItem._rigidbody.useGravity = wasItemUseGravity;
-                holdingItem._rigidbody.isKinematic = wasItemIsKinematic;
-                holdingItem.gameObject.layer = wasItemLayer;
-
-                if (holdingItem.resetRotationAfterDrop)
-                    holdingItem.transform.rotation = Quaternion.identity;
-
-                //holdingItem.transform.SetParent(null);
-
-                Physics.IgnoreCollision(controller, holdingItem._collider, false);
-
-                holdingItem = null;
+                Drop();
             }
         }
 
@@ -330,5 +345,34 @@ public class Player : MonoBehaviour
                 e.isFreezed = false;
             freezedByGun.Clear();*/
         }
+
+        controller.Move(impact * Time.deltaTime);
+        impact = Vector3.Lerp(impact, Vector3.zero, Time.deltaTime * 0.1f);
+
+        if (isGrounded)
+            impact = Vector3.zero;
+    }
+
+    public void AddImpact(Vector3 dir, float force)
+    {
+        //dir.Normalize();
+        //if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
+        impact += dir.normalized * force / mass;
+    }
+
+    public void Drop()
+    {
+        holdingItem._rigidbody.useGravity = wasItemUseGravity;
+        holdingItem._rigidbody.isKinematic = wasItemIsKinematic;
+        holdingItem.gameObject.layer = wasItemLayer;
+
+        if (holdingItem.resetRotationAfterDrop)
+            holdingItem.transform.rotation = Quaternion.identity;
+
+        //holdingItem.transform.SetParent(null);
+
+        Physics.IgnoreCollision(controller, holdingItem._collider, false);
+
+        holdingItem = null;
     }
 }

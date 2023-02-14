@@ -3,15 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum FanMode { UP, DOWN}
+
+public enum FanForceMode { Impulse, Continous}
+
 public class Fan : SwitchingEntity
 {
     [Header("Fan")]
     public FanMode mode;
+    public FanForceMode forceMode;
 
-    //public float fanPower;
-    public float maxWindDistance;
+    [Header("Impulse")]
+    public float fanPower;
 
+    [Header("Continous")]
     public float fanSpeed = 10.0f;
+    public float maxWindDistance;
 
     public List<GameObject> objectsInside = new List<GameObject>();
 
@@ -47,9 +53,51 @@ public class Fan : SwitchingEntity
             _animator.SetBool("RotateRight", false);
     }
 
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!isOn || isFreezed) return;
+
+        if (forceMode != FanForceMode.Impulse) return;
+
+        if (other.CompareTag("Player"))
+        {
+            Player player = other.GetComponentInParent<Player>();
+            if (player == null) return;
+
+            //player.controller.Move(powerVector);
+            //player.fallingVelocity = powerVector;
+            //player.fallingVelocity = transform.up * fanSpeed / x;
+
+            //Vector3 impact = transform.up.normalized * fanPower;// / mass;
+            //player.controller.Move(impact * Time.deltaTime);
+
+            player.AddImpact(transform.up, fanPower);
+
+            player.isInWind = true;
+        }
+        else
+        {
+            Entity entity = other.GetComponentInParent<Entity>();
+            if (entity == null) return;
+
+            entity._rigidbody.transform.rotation = Quaternion.identity;
+            entity._rigidbody.angularVelocity = Vector3.zero;
+
+            //var acceleration = (entity._rigidbody.velocity - entity.lastVelocity) / Time.fixedDeltaTime;
+            //entity.lastVelocity = entity._rigidbody.velocity;
+
+            //entity._rigidbody.AddForce(Vector3.up * 0.1f, ForceMode.Impulse);
+            //entity._rigidbody.velocity = powerVector;
+            entity._rigidbody.AddForce(transform.up * fanPower, ForceMode.Impulse);
+
+            //entity._rigidbody.velocity = transform.up * fanSpeed / x;
+        }
+    }
+
     private void OnTriggerStay(Collider other)
     {
+        if (forceMode != FanForceMode.Continous) return;
+
         if (!isOn || isFreezed)
         {
             foreach (var go in objectsInside)
@@ -89,7 +137,7 @@ public class Fan : SwitchingEntity
 
             //player.controller.Move(powerVector);
             //player.fallingVelocity = powerVector;
-            player.fallingVelocity = Vector3.up * fanSpeed / x;
+            player.fallingVelocity = transform.up * fanSpeed / x;
 
             player.isInWind = true;
         }
