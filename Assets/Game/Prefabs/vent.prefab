@@ -185,7 +185,7 @@ MonoBehaviour:
   _isOn: 0
   mode: 0
   maxWindDistance: 10
-  fanSpeed: 20
+  fanSpeed: 30
   objectsInside: []
 --- !u!136 &9112505558953345554
 CapsuleCollider:

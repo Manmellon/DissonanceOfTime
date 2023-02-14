@@ -103,7 +103,7 @@ public class Player : MonoBehaviour
 
         if (horizontalInput != 0 || verticalInput != 0)
         {
-            if (Input.GetKey(KeyCode.LeftShift))
+            if (Input.GetKey(KeyCode.LeftShift) && isGrounded)
             {
                 resultSpeed *= runMultiplier;
                 if (isGrounded)
@@ -116,7 +116,7 @@ public class Player : MonoBehaviour
                 }
 
             }
-            else if (isCrouch)
+            /*else if (isCrouch)
             {
                 resultSpeed *= crouchMultiplier;
                 if (isGrounded)
@@ -127,7 +127,7 @@ public class Player : MonoBehaviour
                 {
                     _audioSource.clip = null;
                 }
-            }
+            }*/
             else
             {
                 _audioSource.clip = _walkAudio;
@@ -141,7 +141,7 @@ public class Player : MonoBehaviour
             _audioSource.clip = null;
         }
 
-        if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.LeftControl))
+        /*if (Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.LeftControl))
         {
             isCrouch = !isCrouch;
 
@@ -158,7 +158,7 @@ public class Player : MonoBehaviour
                 //groundCheck.localPosition += new Vector3(0, 0.25f, 0);
                 //transform.position += new Vector3(0, 0.25f, 0);
             }
-        }
+        }*/
 
         controller.Move(move * resultSpeed * Time.deltaTime);
 
