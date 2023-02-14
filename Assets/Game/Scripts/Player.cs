@@ -54,7 +54,8 @@ public class Player : MonoBehaviour
 
     public List<Entity> freezedByGun = new List<Entity>();
 
-    public ParticleSystem gunParticles;
+    //public ParticleSystem gunParticles;
+    public GameObject beam;
 
     public static Player singleton;
 
@@ -289,15 +290,22 @@ public class Player : MonoBehaviour
             }
         }
 
+        foreach (var e in freezedByGun)
+            e.isFreezed = false;
+        freezedByGun.Clear();
+
         //if (Input.GetMouseButtonDown(1))
         if (Input.GetMouseButton(1))
         {
-            gunParticles.Play();
+            //gunParticles.Play();
+            beam.SetActive(true);
 
             RaycastHit[] hits;
             //must use SphereCastAll and maybe sort by distance
 
-            hits = Physics.SphereCastAll(player_camera.transform.position, 1.0f, player_camera.transform.forward);
+            hits = Physics.SphereCastAll(beam.transform.position, 0.02f, beam.transform.right);
+
+            Debug.DrawRay(beam.transform.position, beam.transform.right, Color.red);
 
             foreach (var hit in hits)
             {
@@ -315,12 +323,12 @@ public class Player : MonoBehaviour
         }
         else
         {
-            gunParticles.Stop();
-            foreach (var e in freezedByGun)
-                e.isFreezed = false;
-            freezedByGun.Clear();
-        }
+            //gunParticles.Stop();
+            beam.SetActive(false);
 
-        Debug.Log(gunParticles.isPlaying);
+            /*foreach (var e in freezedByGun)
+                e.isFreezed = false;
+            freezedByGun.Clear();*/
+        }
     }
 }
