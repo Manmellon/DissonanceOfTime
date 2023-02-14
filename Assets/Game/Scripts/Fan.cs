@@ -8,8 +8,10 @@ public class Fan : SwitchingEntity
     [Header("Fan")]
     public FanMode mode;
 
-    public float fanPower;
+    //public float fanPower;
     public float maxWindDistance;
+
+    public float fanSpeed = 10.0f;
 
     public List<GameObject> objectsInside = new List<GameObject>();
 
@@ -71,14 +73,14 @@ public class Fan : SwitchingEntity
 
         float x = Mathf.Clamp(Vector3.Distance(transform.position, other.transform.position), 0, maxWindDistance);
 
-        float windPower = Physics.gravity.magnitude * x + 25 * (1 - x * x / maxWindDistance / 2);
+        //float windPower = Physics.gravity.magnitude * x + 25 * (1 - x * x / maxWindDistance / 2);
 
-        Vector3 powerVector;
-        if (mode == FanMode.UP)
-            powerVector = windPower * transform.up;
-        else
-            powerVector = windPower * -transform.up;
-
+        //Vector3 powerVector;
+        //if (mode == FanMode.UP)
+        //    powerVector = windPower * transform.up;
+        //else
+        //    powerVector = windPower * -transform.up;
+            
 
         if (other.CompareTag("Player"))
         {
@@ -87,7 +89,7 @@ public class Fan : SwitchingEntity
 
             //player.controller.Move(powerVector);
             //player.fallingVelocity = powerVector;
-            player.fallingVelocity = Vector3.up * 5.0f;
+            player.fallingVelocity = Vector3.up * fanSpeed / x;
 
             player.isInWind = true;
         }
@@ -104,9 +106,9 @@ public class Fan : SwitchingEntity
 
             //entity._rigidbody.AddForce(Vector3.up * 0.1f, ForceMode.Impulse);
             //entity._rigidbody.velocity = powerVector;
-            entity._rigidbody.AddForce(Vector3.up * Physics.gravity.magnitude, ForceMode.Acceleration);
+            entity._rigidbody.AddForce(transform.up * Physics.gravity.magnitude, ForceMode.Acceleration);
 
-            entity._rigidbody.velocity = Vector3.up * 5.0f;
+            entity._rigidbody.velocity = transform.up * fanSpeed / x;
         }
     }
 
