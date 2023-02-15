@@ -356,6 +356,8 @@ public class Player : MonoBehaviour
 
     public void Drop()
     {
+        if (holdingItem == null) return;
+
         holdingItem._rigidbody.useGravity = wasItemUseGravity;
         holdingItem._rigidbody.isKinematic = wasItemIsKinematic;
         holdingItem.gameObject.layer = wasItemLayer;
