@@ -35,6 +35,7 @@ public class ChronoPillar : SwitchingEntity
         chronoWall.chronoPillarB = otherPillar;
 
         connections.Add(chronoWall);
+        otherPillar.connections.Add(chronoWall);
     }
 
     /*public void RemoveConnection(ChronoWall wall)
@@ -49,6 +50,7 @@ public class ChronoPillar : SwitchingEntity
             if (wall.chronoPillarA == otherPillar || wall.chronoPillarB == otherPillar)
             {
                 connections.Remove(wall);
+                otherPillar.connections.Remove(wall);
                 Destroy(wall.gameObject);
                 return;
             }
