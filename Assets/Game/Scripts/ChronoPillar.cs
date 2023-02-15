@@ -10,7 +10,7 @@ public class ChronoPillar : SwitchingEntity
 
     public ChronoWall chronoWallPrefab;
 
-    public List<ChronoPillar> connections = new List<ChronoPillar>();
+    public List<ChronoWall> connections = new List<ChronoWall>();
 
     protected override void Start()
     {
@@ -30,13 +30,30 @@ public class ChronoPillar : SwitchingEntity
 
     public void AddConnection(ChronoPillar otherPillar)
     {
-        if ( !connections.Contains(otherPillar) )
-            connections.Add(otherPillar);
+        ChronoWall chronoWall = Instantiate(chronoWallPrefab);
+        chronoWall.chronoPillarA = this;
+        chronoWall.chronoPillarB = otherPillar;
+
+        connections.Add(chronoWall);
     }
 
-    public void RemoveConnection(ChronoPillar otherPillar)
+    /*public void RemoveConnection(ChronoWall wall)
     {
-        if (connections.Contains(otherPillar))
-            connections.Remove(otherPillar);
+        
+    }*/
+
+    public void ProcessConnection(ChronoPillar otherPillar)
+    {
+        foreach (var wall in connections)
+        {
+            if (wall.chronoPillarA == otherPillar || wall.chronoPillarB == otherPillar)
+            {
+                connections.Remove(wall);
+                Destroy(wall.gameObject);
+                return;
+            }
+        }
+
+        AddConnection(otherPillar);
     }
 }

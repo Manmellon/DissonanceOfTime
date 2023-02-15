@@ -276,7 +276,7 @@ public class Player : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (curTarget && curTarget is ChronoPillar otherPillar)
-                        pillar.AddConnection(otherPillar);
+                        pillar.ProcessConnection(otherPillar);
                     else
                         Drop();
                 }
