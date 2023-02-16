@@ -273,9 +273,12 @@ public class Player : MonoBehaviour
             }
         }
 
-        foreach (var e in freezedByGun)
+        /*foreach (var e in freezedByGun)
             e.isFreezed = false;
         freezedByGun.Clear();
+        */
+
+        List<Entity> newFreezing = new List<Entity>();
 
         //if (Input.GetMouseButtonDown(1))
         if (Input.GetMouseButton(1))
@@ -296,12 +299,17 @@ public class Player : MonoBehaviour
                 if (entity)
                 {
                     //entity.isFreezed = !entity.isFreezed;
-                    entity.isFreezed = true;
+                    //entity.isFreezed = true;
 
-                    if (!freezedByGun.Contains(entity))
-                        freezedByGun.Add(entity);
+                    //if (!freezedByGun.Contains(entity))
+                    //    freezedByGun.Add(entity);
+
+                    if (! newFreezing.Contains(entity))
+                        newFreezing.Add(entity);
                 }
             }
+
+
             
         }
         else
@@ -312,6 +320,33 @@ public class Player : MonoBehaviour
             /*foreach (var e in freezedByGun)
                 e.isFreezed = false;
             freezedByGun.Clear();*/
+        }
+
+        //Remove unfreezed
+        List<Entity> mustUnfreeze = new List<Entity>();
+
+        foreach (var f in freezedByGun)
+        {
+            if (!newFreezing.Contains(f))
+            {
+                f.isFreezed = false;
+                mustUnfreeze.Add(f);
+            }
+        }
+
+        foreach (var u in mustUnfreeze)
+        {
+            freezedByGun.Remove(u);
+        }
+
+        //Add new freezed
+        foreach (var n in newFreezing)
+        {
+            if (!freezedByGun.Contains(n))
+            {
+                n.isFreezed = true;
+                freezedByGun.Add(n);
+            }
         }
 
         controller.Move(impact * Time.deltaTime);

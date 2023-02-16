@@ -15,7 +15,7 @@ public class Entity : MonoBehaviour
     [Header("Entity")]
     public bool isDraggable;
     public bool resetRotationAfterDrop;
-    [SerializeField]private bool _isFreezed;
+    [SerializeField]protected bool _isFreezed;
 
     public bool unfreezedUseGravity;
     public bool unfreezedIsKinematic;
@@ -31,13 +31,18 @@ public class Entity : MonoBehaviour
         {
             if (value && !_isFreezed)
             {
+                _isFreezed = value;
                 FreezeTimeAction();
             }
             else if (!value && _isFreezed)
             {
+                _isFreezed = value;
                 UnFreezeTimeAction();
             }
-            _isFreezed = value;
+            else
+            {
+                _isFreezed = value;
+            }
         }
     }
 

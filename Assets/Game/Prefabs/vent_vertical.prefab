@@ -614,6 +614,7 @@ MonoBehaviour:
   enabledMaterial: {fileID: 2100000, guid: 2787966255f7d484b84a1492ef35e685, type: 2}
   disabledMaterial: {fileID: 2100000, guid: 21bce8db78fdddb46b109bc8549523a7, type: 2}
   _isOn: 0
+  triggerCollider: {fileID: 5427908863201284272}
   mode: 0
   forceMode: 1
   fanPower: 0

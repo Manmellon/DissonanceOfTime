@@ -9,6 +9,8 @@ public enum FanForceMode { Impulse, Continous}
 public class Fan : SwitchingEntity
 {
     [Header("Fan")]
+    public Collider triggerCollider;
+
     public FanMode mode;
     public FanForceMode forceMode;
 
@@ -53,9 +55,44 @@ public class Fan : SwitchingEntity
             _animator.SetBool("RotateRight", false);
     }
 
+    protected override void UnFreezeTimeAction()
+    {
+        base.UnFreezeTimeAction();
+
+        foreach (var go in objectsInside)
+        {
+            Entity entity = go.GetComponentInParent<Entity>();
+
+            if (entity != null)
+            {
+                if (entity._collider != null)
+                    OnTriggerEnter(entity._collider);
+                continue;
+            }
+
+            Player player = go.GetComponentInParent<Player>();
+
+            if (player != null)
+            {
+                if (player.controller != null)
+                {
+                    OnTriggerEnter(player.controller);
+                }
+
+            }
+        }
+
+
+    }
+
+    protected override void FreezeTimeAction()
+    {
+        base.FreezeTimeAction();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (!isOn || isFreezed) return;
+        if (!isOn || _isFreezed) return;
 
         if (forceMode != FanForceMode.Impulse) return;
 
@@ -96,9 +133,10 @@ public class Fan : SwitchingEntity
 
     private void OnTriggerStay(Collider other)
     {
-        if (forceMode != FanForceMode.Continous) return;
+        if (!objectsInside.Contains(other.gameObject))
+            objectsInside.Add(other.gameObject);
 
-        if (!isOn || isFreezed)
+        if (!isOn || _isFreezed)
         {
             foreach (var go in objectsInside)
             {
@@ -111,13 +149,13 @@ public class Fan : SwitchingEntity
                 }
             }
 
-            objectsInside.Clear();
+            //objectsInside.Clear();
 
             return;
         }
 
-        if (!objectsInside.Contains(other.gameObject))
-            objectsInside.Add(other.gameObject);
+
+        if (forceMode != FanForceMode.Continous) return;
 
         float x = Mathf.Clamp(Vector3.Distance(transform.position, other.transform.position), 0, maxWindDistance);
 
@@ -162,6 +200,9 @@ public class Fan : SwitchingEntity
 
     private void OnTriggerExit(Collider other)
     {
+        if (objectsInside.Contains(other.gameObject))
+            objectsInside.Remove(other.gameObject);
+
         if (other.CompareTag("Player"))
         {
             Player player = other.GetComponentInParent<Player>();
