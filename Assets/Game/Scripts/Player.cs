@@ -308,9 +308,6 @@ public class Player : MonoBehaviour
                         newFreezing.Add(entity);
                 }
             }
-
-
-            
         }
         else
         {
@@ -352,7 +349,7 @@ public class Player : MonoBehaviour
         controller.Move(impact * Time.deltaTime);
         impact = Vector3.Lerp(impact, Vector3.zero, Time.deltaTime * 0.1f);
 
-        if (isGrounded)
+        if (isGrounded && !isInWind)
             impact = Vector3.zero;
     }
 
