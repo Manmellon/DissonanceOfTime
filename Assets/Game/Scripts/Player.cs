@@ -54,11 +54,12 @@ public class Player : MonoBehaviour
 
     public Entity curTarget;
 
+    [Header("Gun")]
     public List<Entity> freezedByGun = new List<Entity>();
-
-    //public ParticleSystem gunParticles;
     public GameObject beam;
+    public LayerMask gunLayers;
 
+    [Header("Physics")]
     private Vector3 impact;
 
     public static Player singleton;
@@ -312,7 +313,7 @@ public class Player : MonoBehaviour
             RaycastHit[] hits;
             //must use SphereCastAll and maybe sort by distance
 
-            hits = Physics.SphereCastAll(beam.transform.position, 0.02f, beam.transform.right);
+            hits = Physics.SphereCastAll(beam.transform.position, 0.02f, beam.transform.right, gunLayers);
 
             Debug.DrawRay(beam.transform.position, beam.transform.right, Color.red);
 
