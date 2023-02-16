@@ -26,4 +26,15 @@ public class ForceField : MonoBehaviour
             player.Drop();
         }
     }
+
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            Player player = other.GetComponentInParent<Player>();
+            if (player == null) return;
+
+            player.Drop();
+        }
+    }
 }
