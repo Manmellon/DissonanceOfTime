@@ -219,34 +219,9 @@ public class Player : MonoBehaviour
         }
         else //if hold some item
         {
-            //holdingItem.transform.Rotate(Vector3.up * mouseX);
-            //holdingItem.transform.rotation = player_camera.transform.rotation;
-            holdingItem.transform.rotation = (player_camera.transform.rotation * Quaternion.Inverse(startHoldPlayerRotation)) * startHoldItemRotation;
-
-            holdingItem._rigidbody.position = player_camera.transform.position + player_camera.transform.forward * minHoldDistance;
-
-            Vector3 curPos = holdingItem._rigidbody.position;
-
-            Vector3 newPos = (player_camera.transform.position + player_camera.transform.forward * curHoldDistance);
-            Vector3 dir = newPos - curPos;
-            RaycastHit hit;
-            bool wasHit = holdingItem._rigidbody.SweepTest(dir, out hit);
-            //Debug.Log(wasHit + " " + hit.collider + " " + hit.distance + " < " + dir.magnitude);
-            if (wasHit && hit.distance < dir.magnitude)
-            {
-                //Debug.Log(hit.collider.gameObject + " " + hit.distance);
-                //holdingItem._rigidbody.MovePosition(curPos + dir.normalized * (hit.distance - 0.01f));
-                holdingItem._rigidbody.position = curPos + dir.normalized * (hit.distance);
-            }
-            else
-            {
-                //Debug.Log(hit.distance + " " + dir.magnitude);
-                //holdingItem._rigidbody.MovePosition(newPos);
-                holdingItem._rigidbody.position = newPos;
-            }
+            MoveHoldingItem();
 
             //If holding Pillar, need raycast to check if target other pillar here
-
             RaycastHit pillarHit;
 
             if (holdingItem is ChronoPillar pillar)
@@ -296,8 +271,6 @@ public class Player : MonoBehaviour
                     Drop();
                 }
             }
-
-            
         }
 
         foreach (var e in freezedByGun)
@@ -353,6 +326,37 @@ public class Player : MonoBehaviour
         //dir.Normalize();
         //if (dir.y < 0) dir.y = -dir.y; // reflect down force on the ground
         impact += dir.normalized * force / mass;
+    }
+
+    public void MoveHoldingItem()
+    {
+        if (holdingItem == null) return;
+
+        //holdingItem.transform.Rotate(Vector3.up * mouseX);
+        //holdingItem.transform.rotation = player_camera.transform.rotation;
+        holdingItem.transform.rotation = (player_camera.transform.rotation * Quaternion.Inverse(startHoldPlayerRotation)) * startHoldItemRotation;
+
+        holdingItem._rigidbody.position = player_camera.transform.position + player_camera.transform.forward * minHoldDistance;
+
+        Vector3 curPos = holdingItem._rigidbody.position;
+
+        Vector3 newPos = (player_camera.transform.position + player_camera.transform.forward * curHoldDistance);
+        Vector3 dir = newPos - curPos;
+        RaycastHit hit;
+        bool wasHit = holdingItem._rigidbody.SweepTest(dir, out hit);
+        //Debug.Log(wasHit + " " + hit.collider + " " + hit.distance + " < " + dir.magnitude);
+        if (wasHit && hit.distance < dir.magnitude)
+        {
+            //Debug.Log(hit.collider.gameObject + " " + hit.distance);
+            //holdingItem._rigidbody.MovePosition(curPos + dir.normalized * (hit.distance - 0.01f));
+            holdingItem._rigidbody.position = curPos + dir.normalized * (hit.distance);
+        }
+        else
+        {
+            //Debug.Log(hit.distance + " " + dir.magnitude);
+            //holdingItem._rigidbody.MovePosition(newPos);
+            holdingItem._rigidbody.position = newPos;
+        }
     }
 
     public void Drop()

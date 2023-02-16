@@ -34,6 +34,7 @@ public class ForceField : MonoBehaviour
             Player player = other.GetComponentInParent<Player>();
             if (player == null) return;
 
+            player.MoveHoldingItem();
             player.Drop();
         }
     }
