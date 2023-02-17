@@ -65,7 +65,7 @@ public class Fan : SwitchingEntity
 
             if (entity != null)
             {
-                if (entity._collider != null)
+                if (entity._collider != null && entity._rigidbody.velocity.magnitude <= 0)//Bad, because fans can crossing, and only one will give impact...(and for entities non-zero speed not work)
                     OnTriggerEnter(entity._collider);
                 continue;
             }
@@ -74,7 +74,7 @@ public class Fan : SwitchingEntity
 
             if (player != null)
             {
-                if (player.controller != null && player.impact.magnitude <= 0)
+                if (player.controller != null && player.impact.magnitude <= 0)//Bad, because fans can crossing, and only one will give impact...
                 {
                     OnTriggerEnter(player.controller);
                 }
