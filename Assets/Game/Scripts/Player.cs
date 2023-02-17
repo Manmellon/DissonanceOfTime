@@ -60,7 +60,7 @@ public class Player : MonoBehaviour
     public LayerMask gunLayers;
 
     [Header("Physics")]
-    private Vector3 impact;
+    public Vector3 impact;
 
     public static Player singleton;
 

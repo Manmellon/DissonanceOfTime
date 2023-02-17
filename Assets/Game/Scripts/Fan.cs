@@ -74,7 +74,7 @@ public class Fan : SwitchingEntity
 
             if (player != null)
             {
-                if (player.controller != null)
+                if (player.controller != null && player.impact.magnitude <= 0)
                 {
                     OnTriggerEnter(player.controller);
                 }
