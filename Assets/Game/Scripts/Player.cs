@@ -213,6 +213,12 @@ public class Player : MonoBehaviour
                         curHoldDistance = Mathf.Clamp(Vector3.Distance(player_camera.transform.position, entity.transform.position), minHoldDistance, maxHoldDistance);
                         startHoldItemRotation = entity.transform.rotation;
                         startHoldPlayerRotation = player_camera.transform.rotation;
+
+                        if (entity is ChronoPillar pillar)
+                        {
+                            if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+                                pillar.ResetAllConnections();
+                        }
                     }
                 }
             }
@@ -252,7 +258,9 @@ public class Player : MonoBehaviour
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (curTarget && curTarget is ChronoPillar otherPillar)
+                    {
                         pillar.ProcessConnection(otherPillar);
+                    }
                     else
                         Drop();
                 }

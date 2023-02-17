@@ -84,7 +84,6 @@ public class Fan : SwitchingEntity
 
             if (player != null)
             {
-                Debug.Log("Player in fan: tookImpulse = " + go.tookImpulse);
                 if (player.controller != null && !go.tookImpulse)
                 {
                     OnTriggerEnter(player.controller);
@@ -155,7 +154,6 @@ public class Fan : SwitchingEntity
 
         if (!contains)
         {
-            Debug.Log("Enter not conatins");
             var co = new ContainingObject();
             co.gameObject = other.gameObject;
             co.tookImpulse = true;
@@ -184,7 +182,6 @@ public class Fan : SwitchingEntity
         //   objectsInside.Add(other.gameObject);
         if (!contains)
         {
-            Debug.Log("New object inside");
             var co = new ContainingObject();
             co.gameObject = other.gameObject;
             objectsInside.Add(co);

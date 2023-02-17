@@ -58,4 +58,20 @@ public class ChronoPillar : SwitchingEntity
 
         AddConnection(otherPillar);
     }
+
+    public void ResetAllConnections()
+    {
+        for (int i = 0; i < connections.Count; i++)
+        {
+            var wall = connections[i];
+            if (wall.chronoPillarA == this)
+                wall.chronoPillarB.connections.Remove(wall);
+            else if (wall.chronoPillarB == this)
+                wall.chronoPillarA.connections.Remove(wall);
+
+            Destroy(wall.gameObject);
+        }
+
+        connections.Clear();
+    }
 }
