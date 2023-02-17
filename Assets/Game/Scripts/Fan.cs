@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,13 @@ using UnityEngine;
 public enum FanMode { UP, DOWN}
 
 public enum FanForceMode { Impulse, Continous}
+
+[Serializable]
+public struct ContainingObject
+{
+    public GameObject gameObject;
+    public bool tookImpulse;
+}
 
 public class Fan : SwitchingEntity
 {
@@ -21,7 +29,7 @@ public class Fan : SwitchingEntity
     public float fanSpeed = 10.0f;
     public float maxWindDistance;
 
-    public List<GameObject> objectsInside = new List<GameObject>();
+    public List<ContainingObject> objectsInside = new List<ContainingObject>();
 
     // Start is called before the first frame update
     protected override void Start()
@@ -59,30 +67,30 @@ public class Fan : SwitchingEntity
     {
         base.UnFreezeTimeAction();
 
-        foreach (var go in objectsInside)
+        for (int i = 0; i < objectsInside.Count; i++)
         {
-            Entity entity = go.GetComponentInParent<Entity>();
+            var go = objectsInside[i];
+
+            Entity entity = go.gameObject.GetComponentInParent<Entity>();
 
             if (entity != null)
             {
-                if (entity._collider != null && entity._rigidbody.velocity.magnitude <= 0)//Bad, because fans can crossing, and only one will give impact...(and for entities non-zero speed not work)
+                if (entity._collider != null && !go.tookImpulse)
                     OnTriggerEnter(entity._collider);
                 continue;
             }
 
-            Player player = go.GetComponentInParent<Player>();
+            Player player = go.gameObject.GetComponentInParent<Player>();
 
             if (player != null)
             {
-                if (player.controller != null && player.impact.magnitude <= 0)//Bad, because fans can crossing, and only one will give impact...
+                Debug.Log("Player in fan: tookImpulse = " + go.tookImpulse);
+                if (player.controller != null && !go.tookImpulse)
                 {
                     OnTriggerEnter(player.controller);
                 }
-
             }
         }
-
-
     }
 
     protected override void FreezeTimeAction()
@@ -129,12 +137,59 @@ public class Fan : SwitchingEntity
 
             //entity._rigidbody.velocity = transform.up * fanSpeed / x;
         }
+
+        bool contains = false;
+        int founded = -1;
+        
+        for (int i = 0; i < objectsInside.Count; i++)
+        {
+            var go = objectsInside[i];
+
+            if (go.gameObject.Equals(other.gameObject))
+            {
+                contains = true;
+                founded = i;
+                break;
+            }
+        }
+
+        if (!contains)
+        {
+            Debug.Log("Enter not conatins");
+            var co = new ContainingObject();
+            co.gameObject = other.gameObject;
+            co.tookImpulse = true;
+            objectsInside.Add(co);
+        }
+        else
+        {
+            var co = objectsInside[founded];
+            co.tookImpulse = true;
+            objectsInside[founded] = co;
+        }
     }
 
     private void OnTriggerStay(Collider other)
     {
-        if (!objectsInside.Contains(other.gameObject))
-            objectsInside.Add(other.gameObject);
+        bool contains = false;
+        foreach (var go in objectsInside)
+        {
+            if (go.gameObject.Equals(other.gameObject))
+            {
+                contains = true;
+                break;
+            }
+        }
+        //if (!objectsInside.Contains(other.gameObject))
+        //   objectsInside.Add(other.gameObject);
+        if (!contains)
+        {
+            Debug.Log("New object inside");
+            var co = new ContainingObject();
+            co.gameObject = other.gameObject;
+            objectsInside.Add(co);
+        }
+
 
         if (!isOn || _isFreezed)
         {
@@ -200,8 +255,16 @@ public class Fan : SwitchingEntity
 
     private void OnTriggerExit(Collider other)
     {
-        if (objectsInside.Contains(other.gameObject))
-            objectsInside.Remove(other.gameObject);
+        foreach (var go in objectsInside)
+        {
+            if (go.gameObject.Equals(other.gameObject))
+            {
+                objectsInside.Remove(go);
+                break;
+            }
+        }
+        //if (objectsInside.Contains(other.gameObject))
+        //    objectsInside.Remove(other.gameObject);
 
         if (other.CompareTag("Player"))
         {
