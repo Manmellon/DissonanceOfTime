@@ -187,6 +187,10 @@ public class Player : MonoBehaviour
                             text += "\nCtrl + ЛКМ - взять, сбросив все связи";
                         UI.singleton.SetDescriptionText(text);
                     }
+                    else
+                    {
+                        UI.singleton.SetDescriptionText("");
+                    }
                 }
                 else
                 {

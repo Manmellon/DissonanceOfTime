@@ -19,7 +19,16 @@ public class Platform : SwitchingEntity
     {
         base.Update();
 
-        _rigidbody.MovePosition(_rigidbody.position + velocity * Time.deltaTime);
+        
+    }
+
+    private void FixedUpdate()
+    {
+        Vector3 direction = velocity * Time.fixedDeltaTime;
+
+        RaycastHit hit;
+        if (!_rigidbody.SweepTest(direction, out hit, direction.magnitude))
+            _rigidbody.MovePosition(_rigidbody.position + direction);
 
         if (isOn)
         {
