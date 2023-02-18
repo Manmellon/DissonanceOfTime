@@ -87,17 +87,6 @@ public class Player : MonoBehaviour
             fallingVelocity = Physics.gravity.normalized;
         }
 
-        if (isGrounded && Input.GetKey(KeyCode.Space))
-        {
-            isGrounded = false;
-
-            //fallingVelocity.y = Mathf.Sqrt(jumpHeight * 2f * gravity);
-            fallingVelocity = -Mathf.Sqrt(jumpHeight * 2f * Physics.gravity.magnitude) * Physics.gravity.normalized;
-
-            //jumpTimer = 1;
-            //anim.SetBool("Jumping", true);
-        }
-
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
@@ -143,6 +132,24 @@ public class Player : MonoBehaviour
         else
         {
             _audioSource.clip = null;
+        }
+
+        if (isGrounded && Input.GetKey(KeyCode.Space))
+        {
+            isGrounded = false;
+
+            //fallingVelocity.y = Mathf.Sqrt(jumpHeight * 2f * gravity);
+            fallingVelocity = -Mathf.Sqrt(jumpHeight * 2f * Physics.gravity.magnitude) * Physics.gravity.normalized;
+
+            //jumpTimer = 1;
+            //anim.SetBool("Jumping", true);
+
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                Vector3 impactDir = (-Physics.gravity.normalized + move.normalized) / 2;
+                Debug.Log(impactDir + " .n = " + impactDir.normalized);
+                AddImpact(impactDir.normalized, 0.1f);
+            }
         }
 
         controller.Move(move * resultSpeed * Time.deltaTime);
