@@ -10,6 +10,8 @@ public class SwitchingEntity : Entity
     public Material enabledMaterial;
     public Material disabledMaterial;
 
+    public bool switchByClick;
+
     [SerializeField]private bool _isOn;
     public bool isOn {
         get {return _isOn;}

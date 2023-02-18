@@ -193,6 +193,10 @@ public class Player : MonoBehaviour
                             text += "\nCtrl + ЛКМ - взять, сбросив все связи";
                         UI.singleton.SetDescriptionText(text);
                     }
+                    else if (entity is SwitchingEntity s && s.switchByClick)
+                    {
+                        UI.singleton.SetDescriptionText("ЛКМ - использовать " + entity.itemName);
+                    }
                     else
                     {
                         UI.singleton.SetDescriptionText("");
@@ -203,29 +207,36 @@ public class Player : MonoBehaviour
                     UI.singleton.SetDescriptionText("");
                 }
 
-                if (Input.GetMouseButtonDown(0) && entity && entity.isDraggable)
+                if (Input.GetMouseButtonDown(0) && entity)
                 {
-                    //entity.transform.SetParent(player_camera.transform);
-
-                    holdingItem = entity;
-                    wasItemUseGravity = entity._rigidbody.useGravity;
-                    wasItemIsKinematic = entity._rigidbody.isKinematic;
-                    wasItemLayer = entity.gameObject.layer;
-
-                    entity._rigidbody.useGravity = false;
-                    entity._rigidbody.isKinematic = true;
-                    entity.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-
-                    Physics.IgnoreCollision(controller, entity._collider);
-
-                    curHoldDistance = Mathf.Clamp(Vector3.Distance(player_camera.transform.position, entity.transform.position), minHoldDistance, maxHoldDistance);
-                    startHoldItemRotation = entity.transform.rotation;
-                    startHoldPlayerRotation = player_camera.transform.rotation;
-
-                    if (entity is ChronoPillar pillar)
+                    if (entity.isDraggable)
                     {
-                        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
-                            pillar.ResetAllConnections();
+                        //entity.transform.SetParent(player_camera.transform);
+
+                        holdingItem = entity;
+                        wasItemUseGravity = entity._rigidbody.useGravity;
+                        wasItemIsKinematic = entity._rigidbody.isKinematic;
+                        wasItemLayer = entity.gameObject.layer;
+
+                        entity._rigidbody.useGravity = false;
+                        entity._rigidbody.isKinematic = true;
+                        entity.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
+                        Physics.IgnoreCollision(controller, entity._collider);
+
+                        curHoldDistance = Mathf.Clamp(Vector3.Distance(player_camera.transform.position, entity.transform.position), minHoldDistance, maxHoldDistance);
+                        startHoldItemRotation = entity.transform.rotation;
+                        startHoldPlayerRotation = player_camera.transform.rotation;
+
+                        if (entity is ChronoPillar pillar)
+                        {
+                            if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+                                pillar.ResetAllConnections();
+                        }
+                    }
+                    else if (entity is SwitchingEntity switching && switching.switchByClick)
+                    {
+                        switching.isOn = !switching.isOn;
                     }
                 }
 
