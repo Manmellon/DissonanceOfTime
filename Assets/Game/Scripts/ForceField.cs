@@ -2,19 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ForceField : MonoBehaviour
+public class ForceField : SwitchingEntity
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("Force Field")]
+    public Collider frontCollider;
+    public Collider backCollider;
+    public MeshRenderer frontMeshRenderer;
+    public MeshRenderer backMeshRenderer;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -38,5 +32,25 @@ public class ForceField : MonoBehaviour
             //player.MoveHoldingItem();
             player.Drop();
         }
+    }
+
+    protected override void TurnedOnAction()
+    {
+        base.TurnedOnAction();
+
+        frontCollider.enabled = true;
+        backCollider.enabled = true;
+        frontMeshRenderer.enabled = true;
+        backMeshRenderer.enabled = true;
+    }
+
+    protected override void TurnedOffAction()
+    {
+        base.TurnedOffAction();
+
+        frontCollider.enabled = false;
+        backCollider.enabled = false;
+        frontMeshRenderer.enabled = false;
+        backMeshRenderer.enabled = false;
     }
 }

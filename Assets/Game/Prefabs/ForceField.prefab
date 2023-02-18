@@ -207,6 +207,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf355be80c9c0a2458da994a13dac697, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rigidbody: {fileID: 0}
+  _collider: {fileID: 0}
+  _animator: {fileID: 0}
+  _audioSource: {fileID: 0}
+  _particleSystem: {fileID: 0}
+  _outline: {fileID: 0}
+  itemName: 
+  isDraggable: 0
+  resetRotationAfterDrop: 0
+  _isFreezed: 0
+  unfreezedUseGravity: 0
+  unfreezedIsKinematic: 0
+  unfreezedVelocity: {x: 0, y: 0, z: 0}
+  unfreezedAngularVelocity: {x: 0, y: 0, z: 0}
+  indicatorMesh: {fileID: 0}
+  material_index: 0
+  enabledMaterial: {fileID: 0}
+  disabledMaterial: {fileID: 0}
+  switchByClick: 0
+  _isOn: 0
+  frontCollider: {fileID: 556361659235612876}
+  backCollider: {fileID: 556361658326860955}
+  frontMeshRenderer: {fileID: 556361659235612872}
+  backMeshRenderer: {fileID: 556361658326860948}
 --- !u!1 &556361660137670700
 GameObject:
   m_ObjectHideFlags: 0
