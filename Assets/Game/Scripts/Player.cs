@@ -179,47 +179,55 @@ public class Player : MonoBehaviour
                     if (entity._outline)
                         entity._outline.enabled = true;
                     curTarget = entity;
+
+                    if (entity.isDraggable)
+                    {
+                        string text = "ЛКМ - взять " + entity.itemName;
+                        if (entity is ChronoPillar)
+                            text += "\nCtrl + ЛКМ - взять, сбросив все связи";
+                        UI.singleton.SetDescriptionText(text);
+                    }
+                }
+                else
+                {
+                    UI.singleton.SetDescriptionText("");
+                }
+
+                if (Input.GetMouseButtonDown(0) && entity && entity.isDraggable)
+                {
+                    //entity.transform.SetParent(player_camera.transform);
+
+                    holdingItem = entity;
+                    wasItemUseGravity = entity._rigidbody.useGravity;
+                    wasItemIsKinematic = entity._rigidbody.isKinematic;
+                    wasItemLayer = entity.gameObject.layer;
+
+                    entity._rigidbody.useGravity = false;
+                    entity._rigidbody.isKinematic = true;
+                    entity.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
+
+                    Physics.IgnoreCollision(controller, entity._collider);
+
+                    curHoldDistance = Mathf.Clamp(Vector3.Distance(player_camera.transform.position, entity.transform.position), minHoldDistance, maxHoldDistance);
+                    startHoldItemRotation = entity.transform.rotation;
+                    startHoldPlayerRotation = player_camera.transform.rotation;
+
+                    if (entity is ChronoPillar pillar)
+                    {
+                        if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
+                            pillar.ResetAllConnections();
+                    }
                 }
 
             }
-            else if (curTarget)
+            else
             {
-                if (curTarget._outline)
-                    curTarget._outline.enabled = false;
-                curTarget = null;
-            }
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                RaycastHit hit;
-                if (Physics.Raycast(player_camera.transform.position, player_camera.transform.forward, out hit, interactionRange, interactionMask))
+                UI.singleton.SetDescriptionText("");
+                if (curTarget)
                 {
-                    Entity entity = hit.transform.GetComponentInParent<Entity>();
-                    if (entity && entity.isDraggable)
-                    {
-                        //entity.transform.SetParent(player_camera.transform);
-
-                        holdingItem = entity;
-                        wasItemUseGravity = entity._rigidbody.useGravity;
-                        wasItemIsKinematic = entity._rigidbody.isKinematic;
-                        wasItemLayer = entity.gameObject.layer;
-
-                        entity._rigidbody.useGravity = false;
-                        entity._rigidbody.isKinematic = true;
-                        entity.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-
-                        Physics.IgnoreCollision(controller, entity._collider);
-
-                        curHoldDistance = Mathf.Clamp(Vector3.Distance(player_camera.transform.position, entity.transform.position), minHoldDistance, maxHoldDistance);
-                        startHoldItemRotation = entity.transform.rotation;
-                        startHoldPlayerRotation = player_camera.transform.rotation;
-
-                        if (entity is ChronoPillar pillar)
-                        {
-                            if (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl))
-                                pillar.ResetAllConnections();
-                        }
-                    }
+                    if (curTarget._outline)
+                        curTarget._outline.enabled = false;
+                    curTarget = null;
                 }
             }
         }
@@ -240,21 +248,32 @@ public class Player : MonoBehaviour
                         entity._outline.enabled = true;
 
                         curTarget = entity;
+
+                        UI.singleton.SetDescriptionText("ЛКМ - Присоединить/Отсоединить ");
                     }
-                    else if (curTarget)
+                    else
+                    {
+                        UI.singleton.SetDescriptionText("ЛКМ - бросить " + holdingItem.itemName);
+                        if (curTarget)
+                        {
+                            if (curTarget._outline)
+                                curTarget._outline.enabled = false;
+                            curTarget = null;
+                        }
+                    }
+
+                }
+                else
+                {
+                    UI.singleton.SetDescriptionText("ЛКМ - бросить " + holdingItem.itemName);
+                    if (curTarget)
                     {
                         if (curTarget._outline)
                             curTarget._outline.enabled = false;
                         curTarget = null;
                     }
                 }
-                else if (curTarget)
-                {
-                    if (curTarget._outline)
-                        curTarget._outline.enabled = false;
-                    curTarget = null;
-                }
-
+                
                 if (Input.GetMouseButtonDown(0))
                 {
                     if (curTarget && curTarget is ChronoPillar otherPillar)
@@ -267,6 +286,7 @@ public class Player : MonoBehaviour
             }
             else
             {
+                UI.singleton.SetDescriptionText("ЛКМ - бросить " + holdingItem.itemName);
                 if (curTarget)
                 {
                     if (curTarget._outline)

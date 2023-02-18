@@ -10,6 +10,9 @@ public class Platform : SwitchingEntity
 
     public float speed;
 
+    public float startMovingTime;
+    public Vector3 curDirection;
+
     protected override void Update()
     {
         base.Update();
@@ -22,5 +25,19 @@ public class Platform : SwitchingEntity
         {
 
         }
+    }
+
+    protected override void TurnedOnAction()
+    {
+        base.TurnedOnAction();
+
+        curDirection = onPosition - offPosition;
+    }
+
+    protected override void TurnedOffAction()
+    {
+        base.TurnedOffAction();
+
+        curDirection = offPosition - onPosition;
     }
 }

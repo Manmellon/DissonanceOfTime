@@ -13,6 +13,7 @@ public class Entity : MonoBehaviour
     public Outline _outline;
 
     [Header("Entity")]
+    public string itemName;
     public bool isDraggable;
     public bool resetRotationAfterDrop;
     [SerializeField]protected bool _isFreezed;
