@@ -147,7 +147,6 @@ public class Player : MonoBehaviour
             if (Input.GetKey(KeyCode.LeftShift))
             {
                 Vector3 impactDir = (-Physics.gravity.normalized + move.normalized) / 2;
-                Debug.Log(impactDir + " .n = " + impactDir.normalized);
                 AddImpact(impactDir.normalized, 0.1f);
             }
         }

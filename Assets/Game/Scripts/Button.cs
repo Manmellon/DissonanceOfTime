@@ -42,32 +42,6 @@ public class Button : SwitchingEntity
 
         _animator.SetBool("Pressed", false);
     }
-    /*
-        private void OnTriggerStay(Collider other)
-        {
-            if (buttonCollider.isColliding)
-            {
-                if (!isOn)
-                {
-                    TurnOn();
-                }
-            }
-            else
-            {
-                if (isOn)
-                {
-                    TurnOff();
-                }
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-            if (!buttonCollider.isColliding && isOn)
-            {
-                TurnOff();
-            }
-        }*/
 
     private void OnTriggerStay(Collider other)
     {
