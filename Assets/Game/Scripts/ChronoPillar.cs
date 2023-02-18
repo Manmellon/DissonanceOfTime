@@ -38,10 +38,11 @@ public class ChronoPillar : SwitchingEntity
         otherPillar.connections.Add(chronoWall);
     }
 
-    /*public void RemoveConnection(ChronoWall wall)
+    public void RemoveConnection(ChronoWall wall)
     {
-        
-    }*/
+        wall.UnfreezeAll();
+        Destroy(wall.gameObject);
+    }
 
     public void ProcessConnection(ChronoPillar otherPillar)
     {
@@ -51,7 +52,7 @@ public class ChronoPillar : SwitchingEntity
             {
                 connections.Remove(wall);
                 otherPillar.connections.Remove(wall);
-                Destroy(wall.gameObject);
+                RemoveConnection(wall);
                 return;
             }
         }
@@ -69,7 +70,7 @@ public class ChronoPillar : SwitchingEntity
             else if (wall.chronoPillarB == this)
                 wall.chronoPillarA.connections.Remove(wall);
 
-            Destroy(wall.gameObject);
+            RemoveConnection(wall);
         }
 
         connections.Clear();

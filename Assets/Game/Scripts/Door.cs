@@ -16,6 +16,8 @@ public class Door : SwitchingEntity
 
         _animator.SetBool("Pressed", true);
 
+        if (isFreezed) return;
+
         doorWayCollider.enabled = false;
     }
 
@@ -23,8 +25,25 @@ public class Door : SwitchingEntity
     {
         base.TurnedOffAction();
 
-        doorWayCollider.enabled = true;
-
         _animator.SetBool("Pressed", false);
+
+        if (isFreezed) return;
+
+        doorWayCollider.enabled = true;
+    }
+
+    protected override void FreezeTimeAction()
+    {
+        base.FreezeTimeAction();
+    }
+
+    protected override void UnFreezeTimeAction()
+    {
+        base.UnFreezeTimeAction();
+
+        if (isOn && doorWayCollider.enabled)
+            doorWayCollider.enabled = false;
+        else if (!isOn && !doorWayCollider.enabled)
+            doorWayCollider.enabled = true;
     }
 }

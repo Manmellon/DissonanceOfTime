@@ -85,45 +85,71 @@ public class ChronoWall : MonoBehaviour
 
     public void CheckRayCasts()
     {
+        List<Entity> newFreezing = new List<Entity>();
+
         //First unfreeze all
-        foreach (var entity in _frozenEntities)
+        /*foreach (var entity in _frozenEntities)
         {
             entity.isFreezed = false;
         }
         _frozenEntities.Clear();
-
+        */
         //Then create new List of frozen (may cause freese flickering, need think later...)
 
         int rayCount = 5;
 
         for (int i = 0; i < rayCount; i++)
         {
-            RaycastHit hit;
-
             Vector3 a = Vector3.Lerp(chronoPillarA.topVertex.position, chronoPillarA.bottomVertex.position, (float)i / (rayCount-1));
             Vector3 b = Vector3.Lerp(chronoPillarB.topVertex.position, chronoPillarB.bottomVertex.position, (float)i / (rayCount-1));
 
             var ray = new Ray(a, b-a);
+            RaycastHit[] hits = Physics.RaycastAll(ray, (chronoPillarB.topVertex.position - chronoPillarA.topVertex.position).magnitude, chronoLayers);
 
-            if (Physics.Raycast(ray, out hit, (chronoPillarB.topVertex.position - chronoPillarA.topVertex.position).magnitude, chronoLayers))
+            foreach (var hit in hits)
             {
                 Entity entity = hit.collider.gameObject.GetComponentInParent<Entity>();
                 if (entity && entity != chronoPillarA && entity != chronoPillarB)
                 {
-                    Debug.DrawLine(a, b, Color.green);
-                    entity.isFreezed = true;
-                    if (! _frozenEntities.Contains(entity))
-                        _frozenEntities.Add(entity);
-                }
-                else
-                {
-                    Debug.DrawLine(a, b, Color.yellow);
+                    if (!newFreezing.Contains(entity))
+                        newFreezing.Add(entity);
                 }
             }
-            else
+
+            //Remove unfreezed
+            List<Entity> mustUnfreeze = new List<Entity>();
+
+            foreach (var f in _frozenEntities)
             {
-                Debug.DrawLine(a, b, Color.red);
+                if (!newFreezing.Contains(f))
+                {
+                    f.isFreezed = false;
+                    mustUnfreeze.Add(f);
+                }
             }
+
+            foreach (var u in mustUnfreeze)
+            {
+                _frozenEntities.Remove(u);
+            }
+
+            //Add new freezed
+            foreach (var n in newFreezing)
+            {
+                if (!_frozenEntities.Contains(n))
+                {
+                    n.isFreezed = true;
+                    _frozenEntities.Add(n);
+                }
+            }
+        }
+    }
+
+    public void UnfreezeAll()
+    {
+        foreach (var f in _frozenEntities)
+        {
+            f.isFreezed = false;
         }
     }
 }

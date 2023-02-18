@@ -311,21 +311,13 @@ public class Player : MonoBehaviour
             }
         }
 
-        /*foreach (var e in freezedByGun)
-            e.isFreezed = false;
-        freezedByGun.Clear();
-        */
-
         List<Entity> newFreezing = new List<Entity>();
 
-        //if (Input.GetMouseButtonDown(1))
         if (Input.GetMouseButton(1))
         {
-            //gunParticles.Play();
             beam.SetActive(true);
 
             RaycastHit[] hits;
-            //must use SphereCastAll and maybe sort by distance
 
             hits = Physics.SphereCastAll(beam.transform.position, 0.02f, beam.transform.right, gunLayers);
 
@@ -336,12 +328,6 @@ public class Player : MonoBehaviour
                 Entity entity = hit.collider.gameObject.GetComponentInParent<Entity>();
                 if (entity)
                 {
-                    //entity.isFreezed = !entity.isFreezed;
-                    //entity.isFreezed = true;
-
-                    //if (!freezedByGun.Contains(entity))
-                    //    freezedByGun.Add(entity);
-
                     if (! newFreezing.Contains(entity))
                         newFreezing.Add(entity);
                 }
@@ -349,12 +335,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            //gunParticles.Stop();
             beam.SetActive(false);
-
-            /*foreach (var e in freezedByGun)
-                e.isFreezed = false;
-            freezedByGun.Clear();*/
         }
 
         //Remove unfreezed
