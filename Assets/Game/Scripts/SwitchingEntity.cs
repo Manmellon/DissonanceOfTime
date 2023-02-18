@@ -1,14 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwitchingEntity : Entity
+[Serializable]
+public struct Indicator
 {
-    [Header("Switching Entity")]
     public MeshRenderer indicatorMesh;
     public int material_index;
     public Material enabledMaterial;
     public Material disabledMaterial;
+}
+
+public class SwitchingEntity : Entity
+{
+    [Header("Switching Entity")]
+    public Indicator[] indicators;
 
     public bool switchByClick;
 
@@ -67,11 +74,11 @@ public class SwitchingEntity : Entity
 
     protected virtual void TurnedOnAction()
     {
-        if (indicatorMesh)
+        foreach (var indicator in indicators)
         {
-            Material[] mats = indicatorMesh.materials;
-            mats[material_index] = enabledMaterial;
-            indicatorMesh.materials = mats;
+            Material[] mats = indicator.indicatorMesh.materials;
+            mats[indicator.material_index] = indicator.enabledMaterial;
+            indicator.indicatorMesh.materials = mats;
         }
 
         if (_particleSystem)
@@ -82,11 +89,11 @@ public class SwitchingEntity : Entity
 
     protected virtual void TurnedOffAction()
     {
-        if (indicatorMesh)
+        foreach (var indicator in indicators)
         {
-            Material[] mats = indicatorMesh.materials;
-            mats[material_index] = disabledMaterial;
-            indicatorMesh.materials = mats;
+            Material[] mats = indicator.indicatorMesh.materials;
+            mats[indicator.material_index] = indicator.disabledMaterial;
+            indicator.indicatorMesh.materials = mats;
         }
 
         if (_particleSystem)
