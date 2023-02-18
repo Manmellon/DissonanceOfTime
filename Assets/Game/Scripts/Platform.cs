@@ -10,20 +10,18 @@ public class Platform : SwitchingEntity
 
     public float speed;
 
-    public float startMovingTime;
     public Vector3 curDirection;
-
     public Vector3 velocity;
 
     protected override void Update()
     {
         base.Update();
-
-        
     }
 
     private void FixedUpdate()
     {
+        if (isFreezed) return;
+
         Vector3 direction = velocity * Time.fixedDeltaTime;
 
         RaycastHit hit;
