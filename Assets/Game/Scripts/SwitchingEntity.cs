@@ -31,7 +31,15 @@ public class SwitchingEntity : Entity
     protected override void Start()
     {
         base.Start();
-        TurnOff();
+ 
+        if (isOn)
+        {
+            TurnedOnAction();
+        }
+        else
+        {
+            TurnedOffAction();
+        }
     }
 
     // Update is called once per frame
