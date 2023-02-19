@@ -62,6 +62,7 @@ public class UIPanel : MonoBehaviour
         exitButton.onClick.AddListener(() => { UI.singleton.QuitGame(); });
 
         //Levels Panel
+        ChooseLevel(0, true);
         foreach (var level in UI.singleton.levels)
         {
             UILevelToggle levelToggle = Instantiate(levelTogglePrefab, levelButtonsParent);
