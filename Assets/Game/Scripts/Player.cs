@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
     public CharacterController controller;
     public Camera player_camera;
 
+    public Animator _animator;
+
     public AudioSource _audioSource;
     public AudioClip _walkAudio;
     public AudioClip _runAudio;
@@ -39,6 +41,8 @@ public class Player : MonoBehaviour
     public bool isCrouch;
 
     public bool isInWind;
+
+    public bool isShooting;
 
     public float minHoldDistance = 1.0f;
     public float maxHoldDistance = 4.0f;//Must be less than interaction range
@@ -324,7 +328,18 @@ public class Player : MonoBehaviour
 
         List<Entity> newFreezing = new List<Entity>();
 
-        if (Input.GetMouseButton(1))
+        if (Input.GetMouseButtonDown(1))
+        {
+            _animator.SetBool("Shoot", true);
+        }
+
+        if (Input.GetMouseButtonUp(1))
+        {
+            _animator.SetBool("Shoot", false);
+            isShooting = false;
+        }
+
+        if (Input.GetMouseButton(1) && isShooting)
         {
             beam.SetActive(true);
 
