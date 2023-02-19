@@ -22,7 +22,11 @@ public class Level : MonoBehaviour
 
     public void InitLevel()
     {
+        Player.singleton.controller.enabled = false;
+
         Player.singleton.transform.position = spawnPoint.position;
         Player.singleton.transform.rotation = Quaternion.Euler(new Vector3(0, spawnPoint.rotation.eulerAngles.y, 0));
+
+        Player.singleton.controller.enabled = true;
     }
 }

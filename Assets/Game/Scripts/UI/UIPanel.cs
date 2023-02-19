@@ -49,7 +49,7 @@ public class UIPanel : MonoBehaviour
 
         continueButton.onClick.AddListener(() => { UI.singleton.Pause(); });
 
-        restartLevelButton.onClick.AddListener(() => { UI.singleton.RestartLevel(); });
+        restartLevelButton.onClick.AddListener(() => { UI.singleton.LoadLevel(UI.singleton.curLevel); });
 
         chooseLevelButton.onClick.AddListener(() => { mainPanel.SetActive(false); levelsPanel.SetActive(true); backButton.gameObject.SetActive(true); });
 

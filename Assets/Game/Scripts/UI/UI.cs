@@ -18,6 +18,7 @@ public class UI : MonoBehaviour
     public bool isPaused;
 
     public Level[] levels;
+    public int curLevel;
 
     public static UI singleton;
 
@@ -80,13 +81,18 @@ public class UI : MonoBehaviour
         Time.timeScale = 1;
         Cursor.lockState = CursorLockMode.Locked;
         isPaused = false;
+
+        LoadLevel(0);
     }
 
-    public void RestartLevel()
+    public void LoadLevel(int levelIndex)
     {
         //Show loading
         //Load level
-        Pause();//Unpause
+        levels[levelIndex].InitLevel();
+
+        if (isPaused)
+            Pause();//Unpause
     }
 
     public void ReturnToMenu()
