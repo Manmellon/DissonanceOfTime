@@ -11,7 +11,7 @@ public class UIPanel : MonoBehaviour
     [Header("Panels")]
     public GameObject mainPanel;
     public GameObject levelsPanel;
-    public GameObject optionsPanel;
+    public GameObject settingsPanel;
     public GameObject helpPanel;
 
     [Header("Main Panel")]
@@ -19,7 +19,7 @@ public class UIPanel : MonoBehaviour
     public Button continueButton;
     public Button restartLevelButton;
     public Button chooseLevelButton;
-    public Button optionsButton;
+    public Button settingsButton;
     public Button helpButton;
     public Button mainMenuButton;
     public Button exitButton;
