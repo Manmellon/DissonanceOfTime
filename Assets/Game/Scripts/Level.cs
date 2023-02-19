@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Level : MonoBehaviour
 {
+    public string levelName;
+    public Transform spawnPoint;
+
     // Start is called before the first frame update
     void Awake()
     {

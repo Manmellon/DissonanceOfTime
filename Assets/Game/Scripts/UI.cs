@@ -6,8 +6,17 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour
 {
+    public GameObject startScreen;
+    public GameObject mainScreen;
+    public GameObject pauseScreen;
+
+    [Header("Start Screen")]
+
+    [Header("Main Screen")]
     public Image cursorImage;
     public TextMeshProUGUI descriptionText;
+
+    [Header("Pause Screen")]
 
     public static UI singleton;
 
