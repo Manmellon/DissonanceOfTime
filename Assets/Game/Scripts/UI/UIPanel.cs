@@ -27,7 +27,9 @@ public class UIPanel : MonoBehaviour
     [Header("Levels Panel")]
     public Image levelThumbnailImage;
     public TextMeshProUGUI levelNameText;
+    public Button levelPanelPlayButton;
     public Transform levelButtonsParent;
+    public ToggleGroup levelToggleGroup;
     public UILevelToggle levelTogglePrefab;
 
     [Header("Settings Panel")]
@@ -62,10 +64,13 @@ public class UIPanel : MonoBehaviour
         exitButton.onClick.AddListener(() => { UI.singleton.QuitGame(); });
 
         //Levels Panel
+        levelPanelPlayButton.onClick.AddListener(() => { UI.singleton.LoadLevel(levelToggleGroup.GetFirstActiveToggle().transform.GetSiblingIndex()); });
         ChooseLevel(0, true);
         foreach (var level in UI.singleton.levels)
         {
             UILevelToggle levelToggle = Instantiate(levelTogglePrefab, levelButtonsParent);
+            levelToggle.numberText.text = levelToggle.transform.GetSiblingIndex().ToString();
+            levelToggle.toggle.group = levelToggleGroup;
             levelToggle.toggle.onValueChanged.AddListener((value) => { ChooseLevel(levelToggle.transform.GetSiblingIndex(), value); });
         }
 

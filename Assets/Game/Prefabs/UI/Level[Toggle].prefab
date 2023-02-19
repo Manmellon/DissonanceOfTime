@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 7735966893916883915}
   toggleTransition: 1
-  graphic: {fileID: 0}
+  graphic: {fileID: 1569093597889324956}
   m_Group: {fileID: 0}
   onValueChanged:
     m_PersistentCalls:
@@ -140,7 +140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ef7a9c127b4cd74583dfbb45fccfcef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggleGroup: {fileID: 0}
   toggle: {fileID: 8870799532419779061}
   numberText: {fileID: 3038932512058432329}
 --- !u!1 &8440886690563501126

@@ -89,7 +89,15 @@ public class UI : MonoBehaviour
     {
         //Show loading
         //Load level
+        //Level level = Instantiate(levels[levelIndex]);
+        //level.InitLevel();
+
+        foreach (var level in levels)
+            level.enabled = false;
+        levels[levelIndex].enabled = true;
         levels[levelIndex].InitLevel();
+        
+
 
         if (isPaused)
             Pause();//Unpause
