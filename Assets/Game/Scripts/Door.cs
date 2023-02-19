@@ -18,7 +18,8 @@ public class Door : SwitchingEntity
 
         if (isFreezed) return;
 
-        doorWayCollider.enabled = false;
+        //doorWayCollider.enabled = false;
+        SwitchDoor(true);
     }
 
     protected override void TurnedOffAction()
@@ -29,7 +30,8 @@ public class Door : SwitchingEntity
 
         if (isFreezed) return;
 
-        doorWayCollider.enabled = true;
+        //doorWayCollider.enabled = true;
+        SwitchDoor(false);
     }
 
     protected override void FreezeTimeAction()
@@ -41,9 +43,17 @@ public class Door : SwitchingEntity
     {
         base.UnFreezeTimeAction();
 
-        if (isOn && doorWayCollider.enabled)
-            doorWayCollider.enabled = false;
-        else if (!isOn && !doorWayCollider.enabled)
-            doorWayCollider.enabled = true;
+        if (isOn && !doorWayCollider.isTrigger)
+            //doorWayCollider.enabled = false;
+            SwitchDoor(true);
+        else if (!isOn && doorWayCollider.isTrigger)
+            //doorWayCollider.enabled = true;
+            SwitchDoor(false);
+    }
+
+    public void SwitchDoor(bool enable)
+    {
+        //doorWayCollider.enabled = enable;
+        doorWayCollider.isTrigger = enable;
     }
 }
