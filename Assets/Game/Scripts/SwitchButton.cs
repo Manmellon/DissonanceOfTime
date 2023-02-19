@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Button : SwitchingEntity
+public class SwitchButton : SwitchingEntity
 {
     [Header("Button")]
     public ButtonCollider buttonCollider;

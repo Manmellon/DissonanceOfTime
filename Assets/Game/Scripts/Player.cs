@@ -76,12 +76,14 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (UI.singleton.isPaused) return;
+
         isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask) && !isInWind;
 
         //????
