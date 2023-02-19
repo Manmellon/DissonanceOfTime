@@ -5,6 +5,7 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     public string levelName;
+    public Sprite thumbnailSprite;
     public Transform spawnPoint;
 
     // Start is called before the first frame update
@@ -21,6 +22,7 @@ public class Level : MonoBehaviour
 
     public void InitLevel()
     {
-
+        Player.singleton.transform.position = spawnPoint.position;
+        Player.singleton.transform.rotation = Quaternion.Euler(new Vector3(0, spawnPoint.rotation.eulerAngles.y, 0));
     }
 }
