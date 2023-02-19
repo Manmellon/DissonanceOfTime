@@ -82,6 +82,13 @@ public class UI : MonoBehaviour
         isPaused = false;
     }
 
+    public void RestartLevel()
+    {
+        //Show loading
+        //Load level
+        Pause();//Unpause
+    }
+
     public void ReturnToMenu()
     {
         startScreen.SetActive(true); pauseScreen.SetActive(false); mainScreen.SetActive(false);

@@ -38,14 +38,29 @@ public class UIPanel : MonoBehaviour
 
     void Start()
     {
+        backButton.onClick.AddListener(() => { levelsPanel.SetActive(false); settingsPanel.SetActive(false); helpPanel.SetActive(false);
+                                                mainPanel.SetActive(true); backButton.gameObject.SetActive(false); });
+
         //Start screen
         playButton.onClick.AddListener(() => { UI.singleton.Play(); } );
 
         continueButton.onClick.AddListener(() => { UI.singleton.Pause(); });
 
+        restartLevelButton.onClick.AddListener(() => { UI.singleton.RestartLevel(); });
+
+        chooseLevelButton.onClick.AddListener(() => { mainPanel.SetActive(false); levelsPanel.SetActive(true); backButton.gameObject.SetActive(true); });
+
+        settingsButton.onClick.AddListener(() => { mainPanel.SetActive(false); settingsPanel.SetActive(true); backButton.gameObject.SetActive(true); });
+
+        helpButton.onClick.AddListener(() => { mainPanel.SetActive(false); helpPanel.SetActive(true); backButton.gameObject.SetActive(true); });
+
         mainMenuButton.onClick.AddListener(() => { UI.singleton.ReturnToMenu(); });
 
         exitButton.onClick.AddListener(() => { UI.singleton.QuitGame(); });
+
+        //Levels Panel
+
+        //Settings Panel
     }
 
 }
