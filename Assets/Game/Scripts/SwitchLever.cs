@@ -11,21 +11,40 @@ public class SwitchLever : SwitchingEntity
     {
         base.TurnedOnAction();
 
-        if (influencedSwitchEntity != null)
-            influencedSwitchEntity.TurnOn();
-
         if (_animator != null)
             _animator.SetBool("Pressed", true);
+
+        if (isFreezed) return;
+
+        if (influencedSwitchEntity != null)
+            influencedSwitchEntity.TurnOn();
     }
 
     protected override void TurnedOffAction()
     {
         base.TurnedOffAction();
 
-        if (influencedSwitchEntity != null)
-            influencedSwitchEntity.TurnOff();
-
         if (_animator != null)
             _animator.SetBool("Pressed", false);
+
+        if (isFreezed) return;
+
+        if (influencedSwitchEntity != null)
+            influencedSwitchEntity.TurnOff();
+    }
+
+    protected override void FreezeTimeAction()
+    {
+        base.FreezeTimeAction();
+    }
+
+    protected override void UnFreezeTimeAction()
+    {
+        base.UnFreezeTimeAction();
+
+        if (isOn && !influencedSwitchEntity.isOn)
+            influencedSwitchEntity.TurnOn();
+        else if (!isOn && influencedSwitchEntity.isOn)
+            influencedSwitchEntity.TurnOff();
     }
 }
