@@ -9,7 +9,7 @@ public class Button : SwitchingEntity
     public Collider pressingCollider;
     public Collider baseCollider;
 
-    public SwitchingEntity influencedSwitchEntity;
+    public SwitchingEntity[] influencedSwitchEntities;
 
     protected override void Start()
     {
@@ -34,8 +34,11 @@ public class Button : SwitchingEntity
 
         if (isFreezed) return;
 
-        if (influencedSwitchEntity != null)
-            influencedSwitchEntity.TurnOn();
+        foreach (var ise in influencedSwitchEntities)
+        {
+            if (ise != null)
+                ise.TurnOn();
+        }
     }
 
     protected override void TurnedOffAction()
@@ -47,8 +50,11 @@ public class Button : SwitchingEntity
 
         if (isFreezed) return;
 
-        if (influencedSwitchEntity != null)
-            influencedSwitchEntity.TurnOff();
+        foreach (var ise in influencedSwitchEntities)
+        {
+            if (ise != null)
+                ise.TurnOff();
+        }
     }
 
     protected override void FreezeTimeAction()
@@ -60,10 +66,16 @@ public class Button : SwitchingEntity
     {
         base.UnFreezeTimeAction();
 
-        if (isOn && !influencedSwitchEntity.isOn)
-            influencedSwitchEntity.TurnOn();
-        else if (!isOn && influencedSwitchEntity.isOn)
-            influencedSwitchEntity.TurnOff();
+        foreach (var ise in influencedSwitchEntities)
+        {
+            if (ise == null) continue;
+
+            if (isOn && !ise.isOn)
+                ise.TurnOn();
+            else if (!isOn && ise.isOn)
+                ise.TurnOff();
+        }
+        
     }
 
     private void OnTriggerStay(Collider other)

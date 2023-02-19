@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Wire : SwitchingEntity
 {
-    [Header("Wire")]
+    /*[Header("Wire")]
     public SwitchingEntity energySource;
 
     protected override void Update()
@@ -29,5 +29,5 @@ public class Wire : SwitchingEntity
     protected override void TurnedOffAction()
     {
         base.TurnedOffAction();
-    }
+    }*/
 }
