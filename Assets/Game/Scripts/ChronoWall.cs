@@ -86,24 +86,16 @@ public class ChronoWall : MonoBehaviour
     public void CheckRayCasts()
     {
         List<Entity> newFreezing = new List<Entity>();
-
-        //First unfreeze all
-        /*foreach (var entity in _frozenEntities)
-        {
-            entity.isFreezed = false;
-        }
-        _frozenEntities.Clear();
-        */
-        //Then create new List of frozen (may cause freese flickering, need think later...)
-
-        int rayCount = 5;
+        int rayCount = 7;
 
         for (int i = 0; i < rayCount; i++)
         {
-            Vector3 a = Vector3.Lerp(chronoPillarA.topVertex.position, chronoPillarA.bottomVertex.position, (float)i / (rayCount-1));
-            Vector3 b = Vector3.Lerp(chronoPillarB.topVertex.position, chronoPillarB.bottomVertex.position, (float)i / (rayCount-1));
+            Vector3 a = Vector3.Lerp(chronoPillarA.topVertex.position, chronoPillarA.bottomVertex.position, (float)i / (rayCount - 1));
+            Vector3 b = Vector3.Lerp(chronoPillarB.topVertex.position, chronoPillarB.bottomVertex.position, (float)i / (rayCount - 1));
 
-            var ray = new Ray(a, b-a);
+            Debug.DrawLine(a, b, Color.red);
+
+            var ray = new Ray(a, b - a);
             RaycastHit[] hits = Physics.RaycastAll(ray, (chronoPillarB.topVertex.position - chronoPillarA.topVertex.position).magnitude, chronoLayers);
 
             foreach (var hit in hits)
@@ -115,32 +107,32 @@ public class ChronoWall : MonoBehaviour
                         newFreezing.Add(entity);
                 }
             }
+        }
 
-            //Remove unfreezed
-            List<Entity> mustUnfreeze = new List<Entity>();
+        //Remove unfreezed
+        List<Entity> mustUnfreeze = new List<Entity>();
 
-            foreach (var f in _frozenEntities)
+        foreach (var f in _frozenEntities)
+        {
+            if (!newFreezing.Contains(f))
             {
-                if (!newFreezing.Contains(f))
-                {
-                    f.isFreezed = false;
-                    mustUnfreeze.Add(f);
-                }
+                f.isFreezed = false;
+                mustUnfreeze.Add(f);
             }
+        }
 
-            foreach (var u in mustUnfreeze)
-            {
-                _frozenEntities.Remove(u);
-            }
+        foreach (var u in mustUnfreeze)
+        {
+            _frozenEntities.Remove(u);
+        }
 
-            //Add new freezed
-            foreach (var n in newFreezing)
+        //Add new freezed
+        foreach (var n in newFreezing)
+        {
+            if (!_frozenEntities.Contains(n))
             {
-                if (!_frozenEntities.Contains(n))
-                {
-                    n.isFreezed = true;
-                    _frozenEntities.Add(n);
-                }
+                n.isFreezed = true;
+                _frozenEntities.Add(n);
             }
         }
     }
