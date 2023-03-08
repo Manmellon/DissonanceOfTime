@@ -69,6 +69,7 @@ public class UI : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
 
             pauseScreen.SetActive(false);
+            startScreen.SetActive(false);
             mainScreen.SetActive(true);
         }
 
@@ -91,12 +92,15 @@ public class UI : MonoBehaviour
         //Load level
         //Level level = Instantiate(levels[levelIndex]);
         //level.InitLevel();
+        Debug.Log("ASWDADASDAD");
 
         foreach (var level in levels)
-            level.enabled = false;
-        levels[levelIndex].enabled = true;
+            level.gameObject.SetActive(false);
+        levels[levelIndex].gameObject.SetActive(true);
         levels[levelIndex].InitLevel();
-        
+
+        //pauseScreen.SetActive(false);
+        //mainScreen.SetActive(true);
 
 
         if (isPaused)
