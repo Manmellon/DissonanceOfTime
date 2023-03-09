@@ -20,6 +20,8 @@ public class UI : MonoBehaviour
     public Level[] levels;
     public int curLevel;
 
+    public Level spawnedLevel;
+
     public static UI singleton;
 
     void Awake()
@@ -88,19 +90,19 @@ public class UI : MonoBehaviour
 
     public void LoadLevel(int levelIndex)
     {
+        Debug.Log("Load Level");
         //Show loading
         //Load level
-        //Level level = Instantiate(levels[levelIndex]);
-        //level.InitLevel();
-        Debug.Log("ASWDADASDAD");
 
-        foreach (var level in levels)
+        if (spawnedLevel != null)
+            Destroy(spawnedLevel.gameObject);
+        spawnedLevel = Instantiate(levels[levelIndex]);
+        spawnedLevel.InitLevel();
+
+        /*foreach (var level in levels)
             level.gameObject.SetActive(false);
         levels[levelIndex].gameObject.SetActive(true);
-        levels[levelIndex].InitLevel();
-
-        //pauseScreen.SetActive(false);
-        //mainScreen.SetActive(true);
+        levels[levelIndex].InitLevel();*/
 
 
         if (isPaused)
