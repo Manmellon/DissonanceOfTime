@@ -81,7 +81,7 @@ public class SwitchingEntity : Entity
             indicator.indicatorMesh.materials = mats;
         }
 
-        if (_particleSystem)
+        if (_particleSystem && ! _isFreezed)
         {
             _particleSystem.Play();
         }
@@ -110,6 +110,11 @@ public class SwitchingEntity : Entity
         {
             if (_particleSystem)
                 _particleSystem.Stop();
+        }
+        else
+        {
+            if (_particleSystem && ! _particleSystem.isPlaying)
+                _particleSystem.Play();
         }
     }
 }
